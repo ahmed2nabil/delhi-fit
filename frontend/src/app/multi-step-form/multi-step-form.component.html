@@ -1,1 +1,128 @@
-<p>multi-step-form works!</p>
+<div class="form-container">
+    <mat-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="personalInfoForm">
+        <form [formGroup]="personalInfoForm">
+          <ng-template matStepLabel>معلومات شخصية</ng-template>
+          <mat-form-field>
+            <mat-label>الاسم الكامل</mat-label>
+            <input matInput formControlName="fullName" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>تاريخ الميلاد</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>البريد الإلكتروني</mat-label>
+            <input matInput type="email" formControlName="email" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="educationForm">
+        <form [formGroup]="educationForm">
+          <ng-template matStepLabel>التعليم</ng-template>
+          <mat-form-field>
+            <mat-label>المستوى التعليمي</mat-label>
+            <mat-select formControlName="educationLevel" required>
+              <mat-option value="highSchool">ثانوي</mat-option>
+              <mat-option value="bachelor">بكالوريوس</mat-option>
+              <mat-option value="master">ماجستير</mat-option>
+              <mat-option value="phd">دكتوراه</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>مجال الدراسة</mat-label>
+            <input matInput formControlName="fieldOfStudy" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>السابق</button>
+            <button mat-button matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="workExperienceForm">
+        <form [formGroup]="workExperienceForm">
+          <ng-template matStepLabel>الخبرة العملية</ng-template>
+          <mat-form-field>
+            <mat-label>المسمى الوظيفي الحالي</mat-label>
+            <input matInput formControlName="currentJobTitle" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>سنوات الخبرة</mat-label>
+            <input matInput type="number" formControlName="yearsOfExperience" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>الشركة الحالية</mat-label>
+            <input matInput formControlName="currentCompany" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>السابق</button>
+            <button mat-button matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="skillsForm">
+        <form [formGroup]="skillsForm">
+          <ng-template matStepLabel>المهارات</ng-template>
+          <mat-form-field>
+            <mat-label>المهارات الرئيسية</mat-label>
+            <input matInput formControlName="primarySkills" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>المهارات الثانوية</mat-label>
+            <input matInput formControlName="secondarySkills">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>اللغات</mat-label>
+            <mat-select formControlName="languages" multiple>
+              <mat-option value="arabic">العربية</mat-option>
+              <mat-option value="english">الإنجليزية</mat-option>
+              <mat-option value="french">الفرنسية</mat-option>
+              <mat-option value="spanish">الإسبانية</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>السابق</button>
+            <button mat-button matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="preferencesForm">
+        <form [formGroup]="preferencesForm">
+          <ng-template matStepLabel>التفضيلات</ng-template>
+          <mat-radio-group formControlName="preferredWorkEnvironment">
+            <mat-label>بيئة العمل المفضلة</mat-label>
+            <mat-radio-button value="office">مكتب</mat-radio-button>
+            <mat-radio-button value="remote">عن بعد</mat-radio-button>
+            <mat-radio-button value="hybrid">هجين</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field>
+            <mat-label>الراتب المتوقع</mat-label>
+            <input matInput type="number" formControlName="expectedSalary" required>
+          </mat-form-field>
+          <mat-checkbox formControlName="willingToRelocate">على استعداد للانتقال</mat-checkbox>
+          <div>
+            <button mat-button matStepperPrevious>السابق</button>
+            <button mat-button matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>إنهاء</ng-template>
+        <p>لقد أكملت جميع الخطوات. انقر على "إرسال" لتقديم النموذج.</p>
+        <div>
+          <button mat-button matStepperPrevious>السابق</button>
+          <button mat-button (click)="submitForm()">إرسال</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>

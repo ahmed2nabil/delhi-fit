@@ -39,4 +39,10 @@ export class NavbarComponent {
   private checkScreenSize() {
     this.isDesktop = window.innerWidth > 768;
   }
+  scrollTo(sectionId: string) {
+    const homeComponent = document.querySelector('app-home') as any;
+    if (homeComponent && homeComponent.scrollTo) {
+      homeComponent.scrollTo(sectionId);
+    }
+  }
 }

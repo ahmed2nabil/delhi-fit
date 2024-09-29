@@ -1,0 +1,48 @@
+<div class="home-container">
+    <section #homeSection class="hero" id="home">
+      <h1>مرحبًا بكم في تطبيقنا</h1>
+      <p>اكتشف مميزات تطبيقنا الرائع</p>
+      <button mat-raised-button color="primary" (click)="scrollTo('about')">تعرف علينا أكثر</button>
+    </section>
+
+    <section #aboutSection class="features" id="about">
+      <h2>حول تطبيقنا</h2>
+      <div class="feature-cards">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>سهولة الاستخدام</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>واجهة بسيطة وسهلة الاستخدام تناسب جميع المستخدمين.</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>أداء عالي</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>تطبيق سريع وفعال يضمن تجربة مستخدم سلسة.</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>دعم متميز</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>فريق دعم متاح على مدار الساعة لمساعدتك.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </section>
+
+    <section #contactSection class="contact" id="contact">
+      <h2>اتصل بنا</h2>
+      <p>نحن هنا للإجابة على استفساراتك</p>
+      <div class="contact-info">
+        <p>البريد الإلكتروني: info&#64;example.com</p>
+        <p>الهاتف: +123 456 7890</p>
+        <p>العنوان: شارع الرئيسي، المدينة، الدولة</p>
+      </div>
+      <button mat-raised-button color="accent">أرسل رسالة</button>
+    </section>
+  </div>

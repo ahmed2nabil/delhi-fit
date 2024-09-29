@@ -1,16 +1,16 @@
 <mat-toolbar color="primary" class="navbar">
     <span class="navbar-brand">تطبيقي RTL</span>
     <div class="navbar-links" [class.is-desktop]="isDesktop">
-        <a mat-button routerLink="/">الرئيسية</a>
-        <a mat-button routerLink="/about">حول</a>
-        <a mat-button routerLink="/contact">اتصل بنا</a>
+        <a mat-button (click)="scrollTo('home')">الرئيسية</a>
+        <a mat-button (click)="scrollTo('about')">حول</a>
+        <a mat-button (click)="scrollTo('contact')">اتصل بنا</a>
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" *ngIf="!isDesktop">
         <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-        <a mat-menu-item routerLink="/">الرئيسية</a>
-        <a mat-menu-item routerLink="/about">حول</a>
-        <a mat-menu-item routerLink="/contact">اتصل بنا</a>
+        <a mat-menu-item (click)="scrollTo('home')">الرئيسية</a>
+        <a mat-menu-item (click)="scrollTo('about')">حول</a>
+        <a mat-menu-item (click)="scrollTo('contact')">اتصل بنا</a>
     </mat-menu>
 </mat-toolbar>

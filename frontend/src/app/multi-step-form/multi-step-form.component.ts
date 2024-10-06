@@ -56,7 +56,7 @@ export class MultiStepFormComponent {
   exerciseRatingForm!: FormGroup;
   additionalInfoForm!: FormGroup;
   today: Date;
-  userSubmitted: boolean = true;
+  userSubmitted: boolean = false;
   constructor(private fb: FormBuilder, private userInfoService: UsersInfoService) {
         // Set today's date
         this.today = new Date();

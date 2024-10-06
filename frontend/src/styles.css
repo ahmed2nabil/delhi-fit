@@ -91,7 +91,14 @@ mat-card {
     max-height: 900px;
     height: 100vh;
 }
-
+/* Mulitple Select*/
+.mat-mdc-select-value-text {
+    color: white !important;
+}
+/* Date Picker */
+mat-datepicker-toggle {
+    color: white !important;
+}
 @media (max-width: 600px) {
     .container {
         padding: 10px;

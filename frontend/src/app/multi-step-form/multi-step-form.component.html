@@ -1,227 +1,267 @@
-<div class="form-container">
-  <h1 class="header-form">قم ببناء جسمك المثالي</h1>
-  <mat-stepper class="custom-stepper" labelPosition="bottom" [linear]="true" #stepper>
-    <mat-step [stepControl]="personalInfoForm">
-      <form [formGroup]="personalInfoForm">
-        <!-- <ng-template matStepLabel>معلومات شخصية</ng-template> -->
-        <mat-form-field>
-          <mat-label>العمر</mat-label>
-          <input matInput type="number" formControlName="age" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>تاريخ الميلاد</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>الطول (سم)</mat-label>
-          <input matInput type="number" formControlName="height" required>
-        </mat-form-field>
+@if(!userSubmitted) {
+  <div class="form-container">
+    <h1 class="header-form">قم ببناء جسمك المثالي</h1>
+    <mat-stepper class="custom-stepper" labelPosition="bottom" [linear]="true" #stepper>
+      <mat-step [stepControl]="personalInfoForm">
+        <form [formGroup]="personalInfoForm">
+          <!-- <ng-template matStepLabel>معلومات شخصية</ng-template> -->
+          <mat-form-field>
+            <mat-label>الاسم</mat-label>
+            <input matInput min="10" max="90" formControlName="name" required>
+            @if (personalInfoForm.get('name')?.hasError('required')) {
+              <mat-error>
+                يجب إدخال الاسم.
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>العمر</mat-label>
+            <input matInput type="number" min="0"  formControlName="age" required>
+            @if (personalInfoForm.get('age')?.hasError('required')) {
+              <mat-error>
+                يجب إدخال العمر.
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>تاريخ الميلاد</mat-label>
+            <input matInput  [matDatepicker]="picker" formControlName="dateOfBirth" [max]="today" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (personalInfoForm.get('dateOfBirth')?.hasError('required')) {
+              <mat-error>
+                يجب إدخال تاريخ الميلاد.
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>الطول (سم)</mat-label>
+            <input matInput type="number" min="0" formControlName="height" required>
+            @if (personalInfoForm.get('height')?.hasError('required')) {
+              <mat-error>
+                يجب إدخال الطول.
+              </mat-error>
+            }
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="fitnessGoalsForm">
+        <form [formGroup]="fitnessGoalsForm">
+          <!-- <ng-template matStepLabel>أهداف اللياقة</ng-template> -->
+          <mat-form-field>
+            <mat-label>ما هو الهدف من الاشتراك؟</mat-label>
+            <textarea matInput formControlName="fitnessGoal" rows="4" required></textarea>
+          </mat-form-field>
+          <mat-radio-group formControlName="fitnessLevel">
+            <mat-label>ما هو مستواك الرياضي الحالي؟</mat-label>
+            <mat-radio-button value="beginner">مبتدئ ( 6 أشهر ملتزم في التمرين والتغذية)</mat-radio-button>
+            <mat-radio-button value="intermediate">متوسط الخبرة ( 6 أشهر - سنتين)</mat-radio-button>
+            <mat-radio-button value="advanced">متقدم ( أكثر من 6 أشهر )</mat-radio-button>
+          </mat-radio-group>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="workoutDetailsForm">
+        <form [formGroup]="workoutDetailsForm">
+          <!-- <ng-template matStepLabel>تفاصيل التمرين</ng-template> -->
+          <mat-radio-group formControlName="workoutLocation">
+            <mat-label>وين حيكون مكان التمرين؟</mat-label>
+            <mat-radio-button value="gym">في الجيم</mat-radio-button>
+            <mat-radio-button value="home">في المنزل</mat-radio-button>
+          </mat-radio-group>
+          @if (workoutDetailsForm.get('workoutLocation')?.value === 'home') {
+            <mat-form-field>
+              <mat-label>الأدوات المتوفرة في المنزل</mat-label>
+              <textarea matInput formControlName="homeEquipment" rows="4"></textarea>
+            </mat-form-field>
+          }
+          <mat-form-field>
+            <mat-label>كم يوم تقدر تتمرن بالأسبوع؟</mat-label>
+            <input matInput type="number" min="0" max="7" formControlName="workoutDaysPerWeek" required>
+            @if (workoutDetailsForm.get('workoutDaysPerWeek')?.hasError('required')) {
+              <mat-error>
+                يجب ادخال عدد الايام.
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>كم ساعة تقدر تتمرن في اليوم؟</mat-label>
+            <input matInput min="0" max="23"  formControlName="workoutHoursPerDay" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>الأيام المفضلة للتمرين</mat-label>
+            <mat-select formControlName="preferredWorkoutDays" multiple>
+              <mat-option value="sunday">الأحد</mat-option>
+              <mat-option value="monday">الاثنين</mat-option>
+              <mat-option value="tuesday">الثلاثاء</mat-option>
+              <mat-option value="wednesday">الأربعاء</mat-option>
+              <mat-option value="thursday">الخميس</mat-option>
+              <mat-option value="friday">الجمعة</mat-option>
+              <mat-option value="saturday">السبت</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="occupationForm">
+        <form [formGroup]="occupationForm">
+          <!-- <ng-template matStepLabel>المهنة</ng-template> -->
+          <mat-form-field>
+            <mat-label>ما هي مهنتك الحالية؟</mat-label>
+            <input matInput formControlName="currentOccupation">
+          </mat-form-field>
+          <mat-radio-group formControlName="jobNature">
+            <mat-label>طبيعة العمل</mat-label>
+            <mat-radio-button value="office">مكتبي</mat-radio-button>
+            <mat-radio-button value="active">يحتاج الحركة</mat-radio-button>
+          </mat-radio-group>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="experienceForm">
+        <form [formGroup]="experienceForm">
+          <!-- <ng-template matStepLabel>الخبرة السابقة</ng-template> -->
+          <mat-form-field>
+            <mat-label>هل عندك تجربة مسبقة بالتمارين أو الدايت؟</mat-label>
+            <textarea matInput formControlName="previousExperience" rows="4" required></textarea>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="healthForm">
+        <form [formGroup]="healthForm">
+          <!-- <ng-template matStepLabel>الصحة</ng-template> -->
+          <mat-form-field>
+            <mat-label>هل تعاني من أمراض مزمنة؟</mat-label>
+            <input matInput formControlName="chronicDiseases">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>هل عندك أي إصابات بالجسم حالياً أو إصابات سابقة؟</mat-label>
+            <textarea matInput formControlName="injuries" rows="4"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>هل تستخدم أي مكملات غذائية حالياً؟</mat-label>
+            <input matInput formControlName="supplements">
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="dietForm">
+        <form [formGroup]="dietForm">
+          <!-- <ng-template matStepLabel>النظام الغذائي</ng-template> -->
+          <mat-radio-group formControlName="mealPreparation">
+            <mat-label>كيف تفضل تنظيم وجباتك؟</mat-label>
+            <mat-radio-button value="restaurant">الاشتراك مع مطعم</mat-radio-button>
+            <mat-radio-button value="self">تنظيم الوجبات بنفسي</mat-radio-button>
+          </mat-radio-group>
+          @if (dietForm.get('mealPreparation')?.value === 'self') {
+            <mat-radio-group  formControlName="dietMethod">
+              <mat-label>طريقة تنظيم الوجبات المفضلة</mat-label>
+              <mat-radio-button value="calories">حساب السعرات والماكروز</mat-radio-button>
+              <mat-radio-button value="portions">تحديد كميات الأكل</mat-radio-button>
+            </mat-radio-group>
+          }
+          <mat-form-field>
+            <mat-label>أخبرني عن طبيعة أكلك اليومية</mat-label>
+            <textarea matInput formControlName="dailyDiet" rows="4" required></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>هل يوجد حساسية من أكل معين أو أكل ما تحب تأكله؟</mat-label>
+            <input matInput formControlName="foodAllergies">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>ما هي الأكلات التي تفضل أكلها باستمرار؟</mat-label>
+            <input matInput formControlName="favoriteFoods">
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="exerciseRatingForm">
+        <form [formGroup]="exerciseRatingForm">
+          <!-- <ng-template matStepLabel>تقييم التمارين</ng-template> -->
+          <p>ما هو تقييمك لأداء التمارين التالية من 1-5؟</p>
+          <mat-form-field>
+            <mat-label>السكوات بالبار</mat-label>
+            <input matInput type="number" formControlName="squatRating" min="1" max="5" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>الديدلفت بالبار</mat-label>
+            <input matInput type="number" formControlName="deadliftRating" min="1" max="5" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>البنش بريس</mat-label>
+            <input matInput type="number" formControlName="benchPressRating" min="1" max="5" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>البول أب</mat-label>
+            <input matInput type="number" formControlName="pullUpRating" min="1" max="5" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="action-button">السابق</button>
+            <button mat-button matStepperNext class="action-button">التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="additionalInfoForm">
+        <form [formGroup]="additionalInfoForm">
+          <!-- <ng-template matStepLabel>معلومات إضافية</ng-template> -->
+          <mat-form-field>
+            <mat-label>أي شيء آخر تحب أن أعرفه عنك قبل تصميم الخطة؟</mat-label>
+            <textarea matInput formControlName="additionalInfo" rows="4"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>من أين عرفت عبدالعزيز دلحي؟</mat-label>
+            <input matInput formControlName="referralSource" required>
+          </mat-form-field>
+          <div>
+            <button mat-button class="action-button" matStepperPrevious>السابق</button>
+            <button mat-button class="action-button" matStepperNext>التالي</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step>
+        <!-- <ng-template matStepLabel>إنهاء</ng-template> -->
+        <p>لقد أكملت جميع الخطوات. انقر على "إرسال" لتقديم النموذج.</p>
         <div>
-          <button mat-button matStepperNext class="action-button">التالي</button>
+          <button mat-button  class="action-button" matStepperPrevious>السابق</button>
+          <button mat-button  class="action-button" (click)="submitForm()">إرسال</button>
         </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="fitnessGoalsForm">
-      <form [formGroup]="fitnessGoalsForm">
-        <!-- <ng-template matStepLabel>أهداف اللياقة</ng-template> -->
-        <mat-form-field>
-          <mat-label>ما هو الهدف من الاشتراك؟</mat-label>
-          <textarea matInput formControlName="fitnessGoal" rows="4" required></textarea>
-        </mat-form-field>
-        <mat-radio-group formControlName="fitnessLevel">
-          <mat-label>ما هو مستواك الرياضي الحالي؟</mat-label>
-          <mat-radio-button value="beginner">مبتدئ ( 6 أشهر ملتزم في التمرين والتغذية)</mat-radio-button>
-          <mat-radio-button value="intermediate">متوسط الخبرة ( 6 أشهر - سنتين)</mat-radio-button>
-          <mat-radio-button value="advanced">متقدم ( أكثر من 6 أشهر )</mat-radio-button>
-        </mat-radio-group>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="workoutDetailsForm">
-      <form [formGroup]="workoutDetailsForm">
-        <!-- <ng-template matStepLabel>تفاصيل التمرين</ng-template> -->
-        <mat-radio-group formControlName="workoutLocation">
-          <mat-label>وين هيكون مكان التمرين؟</mat-label>
-          <mat-radio-button value="gym">في الجيم</mat-radio-button>
-          <mat-radio-button value="home">في المنزل</mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field *ngIf="workoutDetailsForm.get('workoutLocation')?.value === 'home'">
-          <mat-label>الأدوات المتوفرة في المنزل</mat-label>
-          <textarea matInput formControlName="homeEquipment" rows="4"></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>كم يوم تقدر تتمرن بالأسبوع؟</mat-label>
-          <input matInput type="number" formControlName="workoutDaysPerWeek" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>كم ساعة تقدر تتمرن في اليوم؟</mat-label>
-          <input matInput formControlName="workoutHoursPerDay" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>الأيام المفضلة للتمرين</mat-label>
-          <mat-select formControlName="preferredWorkoutDays" multiple>
-            <mat-option value="sunday">الأحد</mat-option>
-            <mat-option value="monday">الاثنين</mat-option>
-            <mat-option value="tuesday">الثلاثاء</mat-option>
-            <mat-option value="wednesday">الأربعاء</mat-option>
-            <mat-option value="thursday">الخميس</mat-option>
-            <mat-option value="friday">الجمعة</mat-option>
-            <mat-option value="saturday">السبت</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="occupationForm">
-      <form [formGroup]="occupationForm">
-        <!-- <ng-template matStepLabel>المهنة</ng-template> -->
-        <mat-form-field>
-          <mat-label>ما هي مهنتك الحالية؟</mat-label>
-          <input matInput formControlName="currentOccupation">
-        </mat-form-field>
-        <mat-radio-group formControlName="jobNature">
-          <mat-label>طبيعة العمل</mat-label>
-          <mat-radio-button value="office">مكتبي</mat-radio-button>
-          <mat-radio-button value="active">يحتاج الحركة</mat-radio-button>
-        </mat-radio-group>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="experienceForm">
-      <form [formGroup]="experienceForm">
-        <!-- <ng-template matStepLabel>الخبرة السابقة</ng-template> -->
-        <mat-form-field>
-          <mat-label>هل عندك تجربة مسبقة بالتمارين أو الدايت؟</mat-label>
-          <textarea matInput formControlName="previousExperience" rows="4" required></textarea>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="healthForm">
-      <form [formGroup]="healthForm">
-        <!-- <ng-template matStepLabel>الصحة</ng-template> -->
-        <mat-form-field>
-          <mat-label>هل تعاني من أمراض مزمنة؟</mat-label>
-          <input matInput formControlName="chronicDiseases">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>هل عندك أي إصابات بالجسم حالياً أو إصابات سابقة؟</mat-label>
-          <textarea matInput formControlName="injuries" rows="4"></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>هل تستخدم أي مكملات غذائية حالياً؟</mat-label>
-          <input matInput formControlName="supplements">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="dietForm">
-      <form [formGroup]="dietForm">
-        <!-- <ng-template matStepLabel>النظام الغذائي</ng-template> -->
-        <mat-radio-group formControlName="mealPreparation">
-          <mat-label>كيف تفضل تنظيم وجباتك؟</mat-label>
-          <mat-radio-button value="restaurant">الاشتراك مع مطعم</mat-radio-button>
-          <mat-radio-button value="self">تنظيم الوجبات بنفسي</mat-radio-button>
-        </mat-radio-group>
-        <mat-radio-group *ngIf="dietForm.get('mealPreparation')?.value === 'self'" formControlName="dietMethod">
-          <mat-label>طريقة تنظيم الوجبات المفضلة</mat-label>
-          <mat-radio-button value="calories">حساب السعرات والماكروز</mat-radio-button>
-          <mat-radio-button value="portions">تحديد كميات الأكل</mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field>
-          <mat-label>أخبرني عن طبيعة أكلك اليومية</mat-label>
-          <textarea matInput formControlName="dailyDiet" rows="4" required></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>هل يوجد حساسية من أكل معين أو أكل ما تحب تأكله؟</mat-label>
-          <input matInput formControlName="foodAllergies">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>ما هي الأكلات التي تفضل أكلها باستمرار؟</mat-label>
-          <input matInput formControlName="favoriteFoods">
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="exerciseRatingForm">
-      <form [formGroup]="exerciseRatingForm">
-        <!-- <ng-template matStepLabel>تقييم التمارين</ng-template> -->
-        <p>ما هو تقييمك لأداء التمارين التالية من 1-5؟</p>
-        <mat-form-field>
-          <mat-label>السكوات بالبار</mat-label>
-          <input matInput type="number" formControlName="squatRating" min="1" max="5" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>الديدلفت بالبار</mat-label>
-          <input matInput type="number" formControlName="deadliftRating" min="1" max="5" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>البنش بريس</mat-label>
-          <input matInput type="number" formControlName="benchPressRating" min="1" max="5" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>البول أب</mat-label>
-          <input matInput type="number" formControlName="pullUpRating" min="1" max="5" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious class="action-button">السابق</button>
-          <button mat-button matStepperNext class="action-button">التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="additionalInfoForm">
-      <form [formGroup]="additionalInfoForm">
-        <!-- <ng-template matStepLabel>معلومات إضافية</ng-template> -->
-        <mat-form-field>
-          <mat-label>أي شيء آخر تحب أن أعرفه عنك قبل تصميم الخطة؟</mat-label>
-          <textarea matInput formControlName="additionalInfo" rows="4"></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>من أين عرفت عبدالعزيز دلحي؟</mat-label>
-          <input matInput formControlName="referralSource" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>السابق</button>
-          <button mat-button matStepperNext>التالي</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step>
-      <!-- <ng-template matStepLabel>إنهاء</ng-template> -->
-      <p>لقد أكملت جميع الخطوات. انقر على "إرسال" لتقديم النموذج.</p>
-      <div>
-        <button mat-button matStepperPrevious>السابق</button>
-        <button mat-button (click)="submitForm()">إرسال</button>
-      </div>
-    </mat-step>
-  </mat-stepper>
-</div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+} @else {
+  <div class="user-submit-sucess">
+    <h1 class="header-form">شكرا لاجوبتك الان ارفق صور الجسم عبر الواتساب.</h1>
+    <button mat-button  class="action-button" (click)="resetUserSubmit()">انهاء</button>
+  </div>
+}

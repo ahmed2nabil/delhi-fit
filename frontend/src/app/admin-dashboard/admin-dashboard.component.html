@@ -22,9 +22,12 @@
   
       <tr mat-row *matRowDef="let record; columns: ['expandedDetail']" class="example-detail-row">
         <td mat-cell *matCellDef="let record" [attr.colspan]="2">
-          <div class="example-element-detail" *ngIf="expandedElement === record">
-            <p><strong>Details:</strong> {{ record.details }}</p>
-          </div>
+          @if(expandedElement === record) {
+            <div class="example-element-detail">
+              <p><strong>Details:</strong> {{ record.details }}</p>
+            </div>
+          }
+
         </td>
       </tr>
     </table>

@@ -19,4 +19,11 @@ export class UsersInfoService {
       },
     })
   }
+  addUserInfo(userData: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, userData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+    })
+  }
 }

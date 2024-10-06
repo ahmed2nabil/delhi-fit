@@ -29,11 +29,7 @@ html, body {
 .mdc-floating-label {
     color: #f1f1f1 !important;
 }
-/* .mdc-text-field--outlined  {
-    border-color: #f1f1f1 !important;
-} */
-.mat-mdc-form-field {
-}
+
 .mat-mdc-notch-piece  {
     border-color: #f1f1f1 !important;
     color: #f1f1f1 !important;
@@ -63,4 +59,45 @@ html, body {
     --mat-radio-checked-ripple-color: #F2C064;
     --mat-radio-disabled-label-color:#f1f1f1;
     --mat-radio-label-text-color: #f1f1f1;
+}
+
+/* Mat Card */
+.mat-mdc-card {
+    background-color: none !important;
+    --mdc-elevated-card-container-color: none !important;
+    color: #f1f1f1 !important;
+}
+.mat-mdc-card-title, .mat-mdc-card-subtitle {
+    display: block;
+    padding: 0px 17px !important;
+    font-weight: bold;
+}
+.mat-mdc-card-content {
+    display: block;
+    padding: 15px 35px !important;
+    color: #f1f1f1 !important;
+    background-color: none !important;
+}
+mat-card {
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: none !important;
+
+}
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    max-height: 900px;
+    height: 100vh;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    mat-card {
+        width: 100%;
+    }
 }

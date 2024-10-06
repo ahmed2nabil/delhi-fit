@@ -1,0 +1,66 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+    /* font-family: 'Cairo', sans-serif; */
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    margin: 0;
+    padding: 0;
+    /* direction: rtl; */
+}
+.mat-typography {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+}
+html, body {
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #F2C064; }
+    ::-webkit-scrollbar-thumb:hover { background: #f0b341; }
+    
+::-webkit-scrollbar:horizontal{
+    height: 12px;
+}
+.mdc-floating-label {
+    color: #f1f1f1 !important;
+}
+/* .mdc-text-field--outlined  {
+    border-color: #f1f1f1 !important;
+} */
+.mat-mdc-form-field {
+}
+.mat-mdc-notch-piece  {
+    border-color: #f1f1f1 !important;
+    color: #f1f1f1 !important;
+}
+.mdc-text-field--focused {
+    color: #f1f1f1 !important;
+
+}
+.mdc-text-field__input {
+    color: #f1f1f1 !important;
+}
+
+.mat-mdc-radio-button .mat-internal-form-field {
+    color: #f1f1f1 !important;
+}
+.mat-mdc-radio-button.mat-accent {
+    --mdc-radio-disabled-selected-icon-color: white;
+    --mdc-radio-disabled-unselected-icon-color: white;
+    --mdc-radio-unselected-hover-icon-color: #f1f1f1;
+    --mdc-radio-unselected-icon-color: #f1f1f1;
+    --mdc-radio-unselected-pressed-icon-color: #f1f1f1;
+    --mdc-radio-selected-focus-icon-color: #F2C064;
+    --mdc-radio-selected-hover-icon-color: #f0b341;
+    --mdc-radio-selected-icon-color: #F2C064;
+    --mdc-radio-selected-pressed-icon-color: #F2C064;
+    --mat-radio-ripple-color: white;
+    --mat-radio-checked-ripple-color: #F2C064;
+    --mat-radio-disabled-label-color:#f1f1f1;
+    --mat-radio-label-text-color: #f1f1f1;
+}

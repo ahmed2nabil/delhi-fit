@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="navbar">
+    <span class="navbar-brand">تطبيقي RTL</span>
+    <div class="navbar-links" [class.is-desktop]="isDesktop">
+        <a mat-button (click)="scrollTo('home')">الرئيسية</a>
+        <a mat-button (click)="scrollTo('about')">حول</a>
+        <a mat-button (click)="scrollTo('contact')">اتصل بنا</a>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" *ngIf="!isDesktop">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <a mat-menu-item (click)="scrollTo('home')">الرئيسية</a>
+        <a mat-menu-item (click)="scrollTo('about')">حول</a>
+        <a mat-menu-item (click)="scrollTo('contact')">اتصل بنا</a>
+    </mat-menu>
+</mat-toolbar>

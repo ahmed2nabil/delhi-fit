@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color:#161616;
+    background-image: url("../../public/Asset015.png");
+    background-position: center center;
+    background-repeat: repeat-y;
+    background-size: auto;
+    opacity: 1;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+  }
+  main  {
+    flex: 1;
+  }

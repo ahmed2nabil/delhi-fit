@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(16, 31, 39);
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-links {
+    display: flex;
+}
+
+.menu-button {
+    display: none;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 64px);
+}
+
+@media (max-width: 768px) {
+.navbar-links {
+    display: none;
+}
+
+.menu-button {
+    display: block;
+}
+}
+
+/* RTL specific styles */
+[dir="rtl"] .navbar {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .navbar-links {
+    flex-direction: row-reverse;
+}

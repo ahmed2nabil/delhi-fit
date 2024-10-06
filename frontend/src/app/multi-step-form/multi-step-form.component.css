@@ -1,0 +1,106 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; /* This ensures the container takes up the full viewport height */
+    max-width: 80vw;
+    max-height: 90vh;
+    height: 90vh;
+    margin: 20px auto ;
+    padding: 20px;
+    color: rgb(255, 255, 255) ;
+    background: none !important;
+}
+button {
+    margin-right: 8px;
+}
+/* ==================== Stepper style ===================== */
+mat-stepper {
+    width: 60%;
+    height: 80%;
+    background: none;
+    color: #F2C064;
+}
+.action-button {
+    text-align: center !important;
+    background-color: #F2C064;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+}
+::ng-deep  mat-step {
+    margin-top: 10px;
+}
+::ng-deep .mat-step-header  {
+    margin-bottom: 20px !important;
+    background-color: transparent !important;
+}
+::ng-deep .mat-step-header .mat-step-icon {
+    background-color: #F2C064 !important;  /* Change the background color */
+    color: rgb(255, 255, 255) !important;  /* Change the text color */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+  /* Style for completed steps */
+  ::ng-deep  .mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit {
+    background-color: #F2C064 !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+/* Style for the current step */
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #F2C064 !important;
+    color: rgb(255, 255, 255) !important;
+}
+::ng-deep .mat-step-header .mat-step-icon {
+    /* border-radius: 4px;  Adjust for desired squareness */
+}
+::ng-deep  .mat-stepper-horizontal-line {
+    border-top-color: #F2C064 !important;
+}
+  /* Adjust the position of the numbers for bottom label position */
+::ng-deep  .custom-stepper[labelposition="bottom"] .mat-step-header .mat-step-icon {
+    margin-bottom: 8px;  /* Add some space between the number and the label */
+}
+/* ================= Stepper End ===================== */
+/* ================= Form Field Style ================= */
+form {
+    padding: 20px !important
+}
+.header-form {
+    text-align: center;
+}
+mat-form-field {
+    display: block !important;
+    /* color: rgb(255, 255, 255) !important; */
+    width: 100%;
+    margin-bottom: 20px;
+    /* margin-top: 10px; */
+}
+    
+
+/* ================= End of Form Field Style ================= */
+
+/* ================= Radio Button Style ================= */
+mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    color: #f1f1f1 !important;
+}
+mat-radio-button {
+    margin: 5px;
+    color: #f1f1f1 !important;
+}
+
+::ng-deep .mat-step-content {
+    display: flex;
+    flex-direction: column;
+}
+/* ================= End of Radio Button Style  ================= */

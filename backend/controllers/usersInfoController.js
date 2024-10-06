@@ -13,5 +13,14 @@ exports.getUsersInfo = async (req, res) => {
 };
 
 exports.AddUserInfo = async (req, res) => {
+    const userInfoData = req.body;
+    try {
+        const newUserInfo = new UserInfo({...userInfoData});
+        await newUserInfo.save();
+        res.status(201).json(newUserInfo);
 
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
 }

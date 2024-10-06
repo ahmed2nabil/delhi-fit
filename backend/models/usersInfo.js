@@ -10,7 +10,7 @@ const UsersInfoSchema = new mongoose.Schema({
         require: true
     },
     age: {
-        type: number,
+        type: Number,
         require: true
     },
     dateOfBirth: {
@@ -45,7 +45,7 @@ const UsersInfoSchema = new mongoose.Schema({
         require: true
     }, 
     preferredWorkoutDays: {
-        type: String,
+        type: [String],
         require: true
     },
     currentOccupation: {

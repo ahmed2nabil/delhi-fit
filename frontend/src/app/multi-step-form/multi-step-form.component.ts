@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component,LOCALE_ID, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
@@ -7,8 +7,21 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeAr from '@angular/common/locales/ar';
+import { UsersInfoService } from '../services/users-info.service';
+
+export class ArabicDateAdapter extends NativeDateAdapter {
+  override format(date: Date, displayFormat: Object): string {
+    // Here you can customize how the date is displayed
+    // Return the date formatted in Arabic, or use a library like date-fns
+    return date.toLocaleDateString('ar-EG'); // Example for Arabic date format
+  }
+}
+// Register Arabic locale
+registerLocaleData(localeAr);
 @Component({
   selector: 'app-multi-step-form',
   standalone: true,
@@ -22,6 +35,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ar' }, // Set Arabic locale
+    { provide: NativeDateAdapter, useClass: ArabicDateAdapter } // Use the custom Arabic date adapter
+
   ],
   templateUrl: './multi-step-form.component.html',
   styleUrl: './multi-step-form.component.css',
@@ -37,11 +55,16 @@ export class MultiStepFormComponent {
   dietForm!: FormGroup;
   exerciseRatingForm!: FormGroup;
   additionalInfoForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  today: Date;
+  userSubmitted: boolean = false;
+  constructor(private fb: FormBuilder, private userInfoService: UsersInfoService) {
+        // Set today's date
+        this.today = new Date();
+  }
 
   ngOnInit() {
     this.personalInfoForm = this.fb.group({
+      name: ['', Validators.required],
       age: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       height: ['', Validators.required]
@@ -106,7 +129,7 @@ export class MultiStepFormComponent {
       this.dietForm.valid &&
       this.exerciseRatingForm.valid &&
       this.additionalInfoForm.valid) {
-    const formData = {
+    const userData = {
       ...this.personalInfoForm.value,
       ...this.fitnessGoalsForm.value,
       ...this.workoutDetailsForm.value,
@@ -117,10 +140,21 @@ export class MultiStepFormComponent {
       ...this.exerciseRatingForm.value,
       ...this.additionalInfoForm.value
     };
-    console.log('Form submitted:', formData);
-    // Here you would typically send the data to a server
+    this.userSubmitted = true;
+    this.userInfoService
+      .addUserInfo(userData)
+      .subscribe(
+        (response) => {
+        },
+        (error) => {
+          this.userSubmitted = false;
+        }
+      );
   } else {
-    console.log('Form is invalid');
+    this.userSubmitted = false;
   }
+  }
+  resetUserSubmit() {
+    this.userSubmitted = false;
   }
 }

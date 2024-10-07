@@ -6,7 +6,6 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./multi-step-form/multi-step-form.component')
         .then(m => m.MultiStepFormComponent),
-        pathMatch: 'full'
     },
     {
         path: 'multiStep',
@@ -23,5 +22,9 @@ export const routes: Routes = [
         loadComponent: () => import('./admin-dashboard/admin-dashboard.component')
         .then(m => m.AdminDashboardComponent),
         canActivate: [AuthGuard]      
+    }, {
+        path: "**",
+        loadComponent: () => import('./multi-step-form/multi-step-form.component')
+        .then(m => m.MultiStepFormComponent), 
     }
 ];

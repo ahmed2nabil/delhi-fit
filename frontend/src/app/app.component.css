@@ -9,7 +9,11 @@
     background-size: auto;
     opacity: 1;
     transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
-    overflow-y: auto
+    overflow-y: auto;
+    color: #f1f1f1; /* Light text color */
+    font-family: Arial, sans-serif; /* Clean, modern font */
+    margin: 0;
+    padding: 20px; /* Space around content */
   }
   main  {
     flex: 1;

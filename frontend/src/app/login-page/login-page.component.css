@@ -1,19 +1,50 @@
+.login-card {
+    max-width: 400px; /* Limit the width of the card */
+    margin: 50px auto; /* Center the card */
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.login-title {
+    font-weight: bold;
+    font-size: 24px; /* Larger title */
+    text-align: center; /* Center title */
+    color: #F2C064; /* Title color */
+}
+
+.welcome-message {
+    text-align: center; /* Center the welcome message */
+    margin-bottom: 20px; /* Spacing below message */
+    color: #F2C064; /* Message color */
+}
+
 .login-form {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 15px;
 }
 
 .submit-login-button {
     background-color: #F2C064 !important; 
     color: white;
+    padding: 10px 20px; /* Button padding */
+    border-radius: 8px; /* Rounded button corners */
+    transition: background-color 0.3s; /* Smooth transition */
 }
+
+.submit-login-button:hover {
+    background-color: #e0b553 !important; /* Darker shade on hover */
+}
+
 .error-message {
-    color:red; 
-    margin: 10px
+    color: red; 
+    margin: 10px 0; /* Spacing around the error message */
+    text-align: center; /* Center the error message */
 }
 
 :host ::ng-deep .mat-mdc-form-field {
-    width: 80%;
+    width: 100%; /* Full width for the form fields */
+    margin: 10px 0; /* Spacing between fields */
 }

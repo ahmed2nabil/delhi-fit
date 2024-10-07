@@ -3,17 +3,25 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* This ensures the container takes up the full viewport height */
+    height: 100vh; /* Full viewport height */
     max-width: 80vw;
     max-height: 90vh;
-    height: 90vh;
-    margin: 20px auto ;
+    margin: 20px auto;
     padding: 20px;
-    color: rgb(255, 255, 255) ;
-    background: none !important;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(180deg, rgba(255, 204, 102, 0.1) 0%, rgba(0, 0, 0, 0.7) 100%);
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    overflow: auto;
+
 }
 button {
     margin-right: 8px;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+button:hover {
+    background-color: rgba(242, 192, 100, 0.8); /* Darken button on hover */
 }
 /* ==================== Stepper style ===================== */
 mat-stepper {
@@ -21,13 +29,23 @@ mat-stepper {
     height: 80%;
     background: none;
     color: #F2C064;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Slight shadow */
+    border-radius: 8px; /* Rounded corners */
 }
 .action-button {
     text-align: center !important;
     background-color: #F2C064;
     color: rgb(255, 255, 255);
-    padding: 20px;
+    padding: 12px 24px; /* More padding for buttons */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
 }
+.action-button:hover {
+    background-color: #d8a400; /* Darker on hover */
+}
+
 ::ng-deep  mat-step {
     margin-top: 10px;
 }
@@ -72,13 +90,16 @@ form {
 }
 .header-form {
     text-align: center;
+    font-size: 24px; /* Larger header text */
+    margin-bottom: 20px; /* Space below header */
 }
 mat-form-field {
     display: block !important;
-    /* color: rgb(255, 255, 255) !important; */
     width: 100%;
     margin-bottom: 20px;
-    /* margin-top: 10px; */
+    background: rgba(255, 255, 255, 0.1); /* Light background for input fields */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside fields */
 }
     
 
@@ -91,10 +112,12 @@ mat-radio-group {
     margin-bottom: 20px;
     color: #f1f1f1 !important;
 }
+
 mat-radio-button {
     margin: 5px;
     color: #f1f1f1 !important;
 }
+
 
 ::ng-deep .mat-step-content {
     display: flex;
@@ -116,4 +139,13 @@ mat-radio-button {
     position: relative;
     margin-top: 200px;
     color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Shadow for success message */
+}
+
+
+.progress-bar {
+    height: 5px;
+    background-color: #F2C064;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Space between the progress bar and stepper */
 }

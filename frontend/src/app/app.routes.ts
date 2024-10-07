@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./login-page/login-page.component')
-        .then(m => m.LoginPageComponent)   
+        loadComponent: () => import('./multi-step-form/multi-step-form.component')
+        .then(m => m.MultiStepFormComponent),
+        pathMatch: 'full'
     },
     {
         path: 'multiStep',
@@ -19,6 +21,7 @@ export const routes: Routes = [
     {
         path: "admin",
         loadComponent: () => import('./admin-dashboard/admin-dashboard.component')
-        .then(m => m.AdminDashboardComponent)           
+        .then(m => m.AdminDashboardComponent),
+        canActivate: [AuthGuard]      
     }
 ];

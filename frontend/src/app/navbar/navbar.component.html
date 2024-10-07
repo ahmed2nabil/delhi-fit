@@ -1,9 +1,19 @@
 <mat-toolbar color="primary" class="navbar">
-    <span class="navbar-brand">تطبيقي RTL</span>
+    <span class="navbar-brand">تطبيقي دلحي</span>
     <div class="navbar-links" [class.is-desktop]="isDesktop">
         <a mat-button (click)="scrollTo('home')">الرئيسية</a>
         <a mat-button (click)="scrollTo('about')">حول</a>
         <a mat-button (click)="scrollTo('contact')">اتصل بنا</a>
+        @if(isLoggedIn) {
+            <ng-container>
+                <a mat-button (click)="logout()">تسجيل الخروج</a>
+            </ng-container>
+        } @else {
+            <ng-container>
+                <a mat-button (click)="login()">تسجيل الدخول</a>
+            </ng-container>
+        }
+
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" *ngIf="!isDesktop">
         <mat-icon>menu</mat-icon>
@@ -12,5 +22,11 @@
         <a mat-menu-item (click)="scrollTo('home')">الرئيسية</a>
         <a mat-menu-item (click)="scrollTo('about')">حول</a>
         <a mat-menu-item (click)="scrollTo('contact')">اتصل بنا</a>
+        <ng-container *ngIf="isLoggedIn; else loggedOut">
+            <a mat-menu-item (click)="logout()">تسجيل الخروج</a>
+        </ng-container>
+        <ng-template #loggedOut>
+            <a mat-menu-item (click)="login()">تسجيل الدخول</a>
+        </ng-template>
     </mat-menu>
 </mat-toolbar>

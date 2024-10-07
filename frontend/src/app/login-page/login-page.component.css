@@ -1,10 +1,12 @@
 .login-card {
     max-width: 400px; /* Limit the width of the card */
-    margin: 50px auto; /* Center the card */
+    margin: 100px auto; /* Center the card */
     padding: 20px;
-    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    /* background: rgba(0, 0, 0, 0.7); Semi-transparent background */
     border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    box-shadow: 0 4px 20px #00000033; /* Subtle shadow */
+    background: linear-gradient(180deg, rgba(248, 248, 248, 0.67) 0%, rgba(248, 248, 248, 0.00) 100%);
+
 }
 
 .login-title {

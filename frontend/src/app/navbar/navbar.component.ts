@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,13 +30,15 @@ export class NavbarComponent {
   onResize(event: any) {
     this.checkScreenSize();
   }
-  constructor(private router: Router) {
-
+  constructor(private router: Router, private authService: AuthService) {
+    this.authService.isAuthenticated$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
   }
 
   checkUserAuthentication() {
     // For example, check the local storage or call a service
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     this.isLoggedIn = !!token; // Set to true if token exists
 }
 
@@ -54,9 +57,8 @@ export class NavbarComponent {
     }
   }
   logout() {
-    // Logic to handle user logout
-    localStorage.removeItem('token'); // Remove token on logout
-    this.isLoggedIn = false; // Update login state
+      this.authService.logout();
+      this.router.navigateByUrl('/login');
 }
 login() {
   // Logic to show login modal or redirect to login page

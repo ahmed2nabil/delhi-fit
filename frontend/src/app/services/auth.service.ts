@@ -16,6 +16,6 @@ export class AuthService {
       }));
   }
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('userToken');
+    return !!localStorage.getItem('authToken');
   }
 }

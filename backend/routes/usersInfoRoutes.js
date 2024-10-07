@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Protect the route with auth middleware
-router.get('/', auth, getUsersInfo);
+router.get('/', getUsersInfo);
 
 router.post('/', AddUserInfo);
 module.exports = router;

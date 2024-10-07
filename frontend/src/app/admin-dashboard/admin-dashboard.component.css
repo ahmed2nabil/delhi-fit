@@ -1,0 +1,78 @@
+.admin-dashboard-container {
+    max-width: 1200px; /* Limit max width for readability */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Inner padding */
+    background-color: #1E1E1E; /* Dark container background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+}
+
+.element-row {
+    cursor: pointer;
+    background-color: #1E1E1E; /* Dark background */
+    color: #f1f1f1 ;
+
+  }
+  
+  .card {
+    background-color: #2A2A2A; /* Dark background for cards */
+    border: 1px solid #F2C064; /* Gold border for cards */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Inner padding */
+    margin-bottom: 20px; /* Space between cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+  }
+  
+  .detail-row {
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .example-expanded-row {
+    background-color: #2A2A2A !important;
+  }
+
+  .expanded-detail {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1E1E1E; /* Dark background */
+    color: #ffffff; /* Light text color */
+    /* padding: 16px */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .detail-columns {
+    display: flex;
+    /* width: 100%; */
+    width: 78%; /* Adjust as needed */
+    padding: 10px;
+    background-color: #2A2A2A; /* Slightly lighter for contrast */
+    border: 1px solid var(--gold-color); /* Gold border */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .detail-column {
+    width: 48%; /* Adjust as needed */
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    background-color: #1E1E1E; /* Dark background */
+  }
+  h3 {
+    color: #F2C064;
+    margin-bottom: 8px;
+  }
+  strong {
+    color: #F2C064;
+
+  }
+
+  @media (max-width: 768px) {
+    .detail-columns {
+      flex-direction: column; /* Stack columns vertically on smaller screens */
+    }
+  
+    .detail-column {
+      width: 100%; /* Full width on small screens */
+    }
+  }

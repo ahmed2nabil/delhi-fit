@@ -1,34 +1,68 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="usersInfo" class="mat-table" multiTemplateDataRows>
-  
-      <!-- Title Column -->
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Title </th>
-        <td mat-cell *matCellDef="let record" [attr.colspan]="record.details ? 1 : 2">
-          <button mat-button (click)="expandedElement = expandedElement === record ? null : record">
-            {{ record.title }}
-          </button>
-        </td>
-      </ng-container>
-  
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let record">{{ record.description }}</td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="['title', 'description']"></tr>
-      <tr mat-row *matRowDef="let record; columns: ['title', 'description'];"></tr>
-  
-      <tr mat-row *matRowDef="let record; columns: ['expandedDetail']" class="example-detail-row">
-        <td mat-cell *matCellDef="let record" [attr.colspan]="2">
-          @if(expandedElement === record) {
-            <div class="example-element-detail">
-              <p><strong>Details:</strong> {{ record.details }}</p>
-            </div>
-          }
+<div class="admin-dashboard-container">
+  <table mat-table [dataSource]="usersInfo" multiTemplateDataRows class="mat-elevation-z8">
 
-        </td>
-      </tr>
-    </table>
-  </div>
+    <!-- Display the first four fields in the main row -->
+    @for (column of displayedColumns; track column) {
+      <ng-container matColumnDef="{{column}}">
+        <th mat-header-cell *matHeaderCellDef>
+                <!-- Add Arabic translations here -->
+           {{ getArabicHeader(column) }}
+          </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      </ng-container>
+    }
+  
+    <!-- Expanded Content Column - This column will display the rest of the fields when a row is expanded -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="expanded-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="detail-columns">
+            <div class="detail-column">
+              <div class="card">
+                <h2>المعلومات الشخصية</h2>
+                <div><strong>الاسم:</strong> {{ element.name }}</div>
+                <div><strong>العمر:</strong> {{ element.age }}</div>
+                <div><strong>تاريخ الميلاد:</strong> {{ element.dateOfBirth }}</div>
+                <div><strong>الطول:</strong> {{ element.height }}</div>
+              </div>
+              <div class="card">
+                <h2>أهداف اللياقة البدنية</h2>
+                <div><strong>هدف اللياقة البدنية:</strong> {{ element.fitnessGoal }}</div>
+                <div><strong>مستوى اللياقة البدنية:</strong> {{ element.fitnessLevel }}</div>
+              </div>
+            </div>
+            <div class="detail-column">
+              <div class="card">
+                <h2>تفاصيل التمرين</h2>
+                <div><strong>مكان التمرين:</strong> {{ element.workoutLocation }}</div>
+                <div><strong>معدات المنزل:</strong> {{ element.homeEquipment }}</div>
+                <div><strong>أيام التمرين في الأسبوع:</strong> {{ element.workoutDaysPerWeek }}</div>
+                <div><strong>الساعات المخصصة للتمرين:</strong> {{ element.workoutHoursPerDay }}</div>
+                <div><strong>الأيام المفضلة للتمرين:</strong> {{ element.preferredWorkoutDays.join(', ') }}</div>
+              </div>
+              <div class="card">
+                <h2>التقييمات الصحية</h2>
+                <div><strong>تقييم القرفصاء:</strong> {{ element.squatRating }}</div>
+                <div><strong>تقييم رفع الأثقال:</strong> {{ element.deadliftRating }}</div>
+                <div><strong>تقييم الضغط على الصدر:</strong> {{ element.benchPressRating }}</div>
+                <div><strong>تقييم سحب الجسم:</strong> {{ element.pullUpRating }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+  
+    <!-- Row for main fields (first 4 columns) -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+        class="element-row"
+        [class.expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+  
+    <!-- Row for expanded details -->
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  
+  </table>
+</div>

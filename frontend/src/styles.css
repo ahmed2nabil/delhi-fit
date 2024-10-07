@@ -99,6 +99,34 @@ mat-card {
 mat-datepicker-toggle {
     color: white !important;
 }
+
+/*  */
+
+.mat-header-cell {
+    background-color: #2A2A2A; /* Dark header background */
+    color: #F2C064; /* Gold color for header text */
+    font-weight: bold; /* Bold text for headers */
+  }
+  
+  .mat-cell {
+    padding: 12px; /* Padding for table cells */
+    background-color: #2A2A2A; /* Dark header background */
+
+  }
+  
+  .element-row:hover {
+    background-color: #3A3A3A; /* Highlight row on hover */
+  }
+  
+  .detail-row {
+    transition: height 0.3s; /* Smooth transition for expanded rows */
+    background-color: #2A2A2A !important; /* Dark header background */
+
+  }
+  
+  .example-expanded-row {
+    background-color: #282828; /* Darker color for expanded rows */
+  }
 @media (max-width: 600px) {
     .container {
         padding: 10px;
@@ -108,3 +136,4 @@ mat-datepicker-toggle {
         width: 100%;
     }
 }
+

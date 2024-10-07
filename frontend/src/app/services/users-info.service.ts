@@ -15,14 +15,14 @@ export class UsersInfoService {
   getUsersInfo(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`
       },
     })
   }
   addUserInfo(userData: any): Observable<any> {
     return this.http.post<any>(this.baseUrl, userData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`
       },
     })
   }

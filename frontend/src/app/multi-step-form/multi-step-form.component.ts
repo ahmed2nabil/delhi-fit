@@ -57,6 +57,7 @@ export class MultiStepFormComponent {
   additionalInfoForm!: FormGroup;
   today: Date;
   userSubmitted: boolean = false;
+  totalSteps: number = 10;
   constructor(private fb: FormBuilder, private userInfoService: UsersInfoService) {
         // Set today's date
         this.today = new Date();

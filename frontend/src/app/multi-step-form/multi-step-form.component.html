@@ -1,6 +1,8 @@
 @if(!userSubmitted) {
   <div class="form-container">
     <h1 class="header-form">قم ببناء جسمك المثالي</h1>
+    <div class="progress-bar" [style.width]="(stepper.selectedIndex + 1) / totalSteps * 100 + '%'"></div>
+
     <mat-stepper class="custom-stepper" labelPosition="bottom" [linear]="true" #stepper>
       <mat-step [stepControl]="personalInfoForm">
         <form [formGroup]="personalInfoForm">

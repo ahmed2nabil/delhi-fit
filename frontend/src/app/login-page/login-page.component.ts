@@ -38,7 +38,7 @@ export class LoginPageComponent {
       const userData = this.signInForm.value;
       this.authService.login(userData).subscribe({
         next: (response) => {
-          this.router.navigate(['/multiStep']);
+          this.router.navigate(['/admin']);
         },
         error: (error) => {
           console.error('Login failed', error);

@@ -45,6 +45,13 @@
               </mat-error>
             }
           </mat-form-field>
+          <mat-radio-group formControlName="gender">
+            <mat-label>الجنس</mat-label>
+            <div class="mat-radio-button-wrapper">
+              <mat-radio-button value="man">ذكر</mat-radio-button>
+              <mat-radio-button value="woman">أنثي</mat-radio-button>
+            </div>
+          </mat-radio-group>
           <div>
             <button mat-button matStepperNext class="action-button">التالي</button>
           </div>
@@ -57,13 +64,30 @@
           <mat-form-field>
             <mat-label>ما هو الهدف من الاشتراك؟</mat-label>
             <textarea matInput formControlName="fitnessGoal" rows="4" required></textarea>
-          </mat-form-field>
+          </mat-form-field>  
           <mat-radio-group formControlName="fitnessLevel">
             <mat-label>ما هو مستواك الرياضي الحالي؟</mat-label>
             <mat-radio-button value="beginner">مبتدئ ( 6 أشهر ملتزم في التمرين والتغذية)</mat-radio-button>
             <mat-radio-button value="intermediate">متوسط الخبرة ( 6 أشهر - سنتين)</mat-radio-button>
             <mat-radio-button value="advanced">متقدم ( أكثر من 6 أشهر )</mat-radio-button>
           </mat-radio-group>
+          <mat-radio-group formControlName="fitnessFavPlan">
+            <mat-label>هل في خطة معينة حابب تمشي عليها؟</mat-label>
+            <div class="mat-radio-button-wrapper" >
+              <mat-radio-button value="pushPullLegh">push pull leg / دفع سحب ارجل</mat-radio-button>
+              <mat-radio-button value="fullBody">full body / فل بودي</mat-radio-button>
+              <mat-radio-button value="upperLower">upper lower / علوي سفلي</mat-radio-button>
+              <mat-radio-button value="upper">تركيز علي الجزء العلوي</mat-radio-button>
+              <mat-radio-button value="lower">تركيز علي الجزء السفلي</mat-radio-button>
+              <mat-radio-button value="other">شئ اخر مع ذكره</mat-radio-button>
+            </div>
+          </mat-radio-group>
+          @if (fitnessGoalsForm.get('fitnessFavPlan')?.value === 'other') {
+            <mat-form-field>
+              <mat-label>ما هو ؟</mat-label>
+              <input matInput formControlName="fitnessFavPlanOther">
+            </mat-form-field>
+          }
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>
             <button mat-button matStepperNext class="action-button">التالي</button>
@@ -86,11 +110,16 @@
             </mat-form-field>
           }
           <mat-form-field>
-            <mat-label>كم يوم تقدر تتمرن بالأسبوع؟</mat-label>
-            <input matInput type="number" min="0" max="7" formControlName="workoutDaysPerWeek" required>
+            <mat-label>كم يوم تقدر تتمرن بالأسبوع من 3 - 6؟</mat-label>
+            <input matInput type="number" min="3" max="6" formControlName="workoutDaysPerWeek" required>
             @if (workoutDetailsForm.get('workoutDaysPerWeek')?.hasError('required')) {
               <mat-error>
                 يجب ادخال عدد الايام.
+              </mat-error>
+            }
+            @if (workoutDetailsForm.get('workoutDaysPerWeek')?.value < 3 || workoutDetailsForm.get('workoutDaysPerWeek')?.value > 6) {
+              <mat-error>
+                يجب ادخال عدد الايام من 3 الي 6 ايام.
               </mat-error>
             }
           </mat-form-field>
@@ -209,22 +238,22 @@
       <mat-step [stepControl]="exerciseRatingForm">
         <form [formGroup]="exerciseRatingForm">
           <!-- <ng-template matStepLabel>تقييم التمارين</ng-template> -->
-          <p>ما هو تقييمك لأداء التمارين التالية من 1-5؟</p>
+          <p>ما هو تقييمك لأداء التمارين التالية من 0-5؟</p>
           <mat-form-field>
             <mat-label>السكوات بالبار</mat-label>
-            <input matInput type="number" formControlName="squatRating" min="1" max="5" required>
+            <input matInput type="number" formControlName="squatRating" min="0" max="5" required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>الديدلفت بالبار</mat-label>
-            <input matInput type="number" formControlName="deadliftRating" min="1" max="5" required>
+            <input matInput type="number" formControlName="deadliftRating" min="0" max="5" required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>البنش بريس</mat-label>
-            <input matInput type="number" formControlName="benchPressRating" min="1" max="5" required>
+            <input matInput type="number" formControlName="benchPressRating" min="0" max="5" required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>البول أب</mat-label>
-            <input matInput type="number" formControlName="pullUpRating" min="1" max="5" required>
+            <input matInput type="number" formControlName="pullUpRating" min="0" max="5" required>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>

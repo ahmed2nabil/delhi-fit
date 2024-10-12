@@ -13,6 +13,10 @@ const UsersInfoSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
+    gender: {
+        type: String,
+        require: true
+    },
     dateOfBirth: {
         type: Date,
         require: true
@@ -20,6 +24,13 @@ const UsersInfoSchema = new mongoose.Schema({
     height:{
         type: Number,
         require: true
+    },
+    fitnessFavPlan: {
+        type: String,
+        require: true
+    },
+    fitnessFavPlanOther: {
+        type: String,
     },
     fitnessGoal: {
         type: String,
@@ -107,7 +118,11 @@ const UsersInfoSchema = new mongoose.Schema({
     referralSource:  {
         type: String,
         require: true
+    },
+    planId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FilePlan"
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('usersInfo', UsersInfoSchema);
+module.exports = mongoose.model('UsersInfo', UsersInfoSchema);

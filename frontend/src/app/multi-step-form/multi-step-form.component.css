@@ -112,7 +112,14 @@ mat-radio-group {
     margin-bottom: 20px;
     color: #f1f1f1 !important;
 }
-
+mat-radio-group mat-label {
+    margin-bottom: 10px;
+}
+mat-radio-group .mat-radio-button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
 mat-radio-button {
     margin: 5px;
     color: #f1f1f1 !important;

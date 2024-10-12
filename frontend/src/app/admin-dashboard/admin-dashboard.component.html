@@ -24,11 +24,17 @@
                 <div><strong>العمر:</strong> {{ element.age }}</div>
                 <div><strong>تاريخ الميلاد:</strong> {{ element.dateOfBirth }}</div>
                 <div><strong>الطول:</strong> {{ element.height }}</div>
+                <div><strong>الجنس:</strong> {{ element.gender }}</div>
               </div>
               <div class="card">
                 <h2>أهداف اللياقة البدنية</h2>
                 <div><strong>هدف اللياقة البدنية:</strong> {{ element.fitnessGoal }}</div>
                 <div><strong>مستوى اللياقة البدنية:</strong> {{ element.fitnessLevel }}</div>
+                @if (element.fitnessFavPlan === 'other') {
+                  <div><strong>الخطة المفضلة للتمرين:</strong> {{ element.fitnessFavPlanOther }}</div>
+                } @else {
+                  <div><strong>الخطة المفضلة للتمرين:</strong> {{ element.fitnessFavPlan }}</div>
+                }
               </div>
             </div>
             <div class="detail-column">

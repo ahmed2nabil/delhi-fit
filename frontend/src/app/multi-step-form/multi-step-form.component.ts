@@ -1,4 +1,4 @@
-import { Component,LOCALE_ID, ChangeDetectionStrategy } from '@angular/core';
+import { Component, LOCALE_ID, ChangeDetectionStrategy, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
@@ -45,7 +45,7 @@ registerLocaleData(localeAr);
   styleUrl: './multi-step-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MultiStepFormComponent {
+export class MultiStepFormComponent implements OnInit {
   personalInfoForm!: FormGroup;
   fitnessGoalsForm!: FormGroup;
   workoutDetailsForm!: FormGroup;
@@ -68,12 +68,15 @@ export class MultiStepFormComponent {
       name: ['', Validators.required],
       age: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      height: ['', Validators.required]
+      height: ['', Validators.required],
+      gender: ['', Validators.required],
     });
 
     this.fitnessGoalsForm = this.fb.group({
       fitnessGoal: ['', Validators.required],
-      fitnessLevel: ['', Validators.required]
+      fitnessLevel: ['', Validators.required],
+      fitnessFavPlan: ['', Validators.required],
+      fitnessFavPlanOther: ['']
     });
 
     this.workoutDetailsForm = this.fb.group({
@@ -108,10 +111,10 @@ export class MultiStepFormComponent {
     });
 
     this.exerciseRatingForm = this.fb.group({
-      squatRating: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
-      deadliftRating: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
-      benchPressRating: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
-      pullUpRating: ['', [Validators.required, Validators.min(1), Validators.max(5)]]
+      squatRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
+      deadliftRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
+      benchPressRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
+      pullUpRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]]
     });
 
     this.additionalInfoForm = this.fb.group({

@@ -1,6 +1,6 @@
 // controllers/recordController.js
 const UserInfo = require('../models/usersInfo');
-
+const { choosetheCorrectPlan } = require("./planFileController");
 // Fetch all records
 exports.getUsersInfo = async (req, res) => {
     try {
@@ -16,6 +16,11 @@ exports.AddUserInfo = async (req, res) => {
     const userInfoData = req.body;
     try {
         const newUserInfo = new UserInfo({...userInfoData});
+        const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation);
+        console.log(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutDaysPerWeek);
+        console.log(chosenPlan);
+        
+        if (chosenPlan) newUserInfo.planId = chosenPlan._id; 
         await newUserInfo.save();
         res.status(201).json(newUserInfo);
 

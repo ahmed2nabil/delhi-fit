@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/authRoutes');
 const userInfoRoutes = require('./routes/usersInfoRoutes');
+const planFileRoutes = require('./routes/planFileRoutes');
 
 const errorHandler = require('./middleware/error');
 const app = express();
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/usersInfo', userInfoRoutes);
+app.use('/api/planManagement', planFileRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

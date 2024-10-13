@@ -53,7 +53,7 @@ async  function uploadUserFile(user, filePath, fileName) {
         // }
     
         // Generate a unique filename to avoid conflicts
-        const uniqueFileName = `${user.name}_${Date.now()}_${fileName}`;
+        const uniqueFileName = `${user.name}_${fileName}_${Date.now()}_.xlsx`;
         
         // Upload Excel file using mock Google Drive API
         const uploadedFile = await mockDrive.uploadExcelFile(filePath, uniqueFileName);

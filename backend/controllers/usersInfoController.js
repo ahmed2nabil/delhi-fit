@@ -17,9 +17,6 @@ exports.AddUserInfo = async (req, res) => {
     try {
         const newUserInfo = new UserInfo({...userInfoData});
         const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation);
-        console.log(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutDaysPerWeek);
-        console.log(chosenPlan);
-        
         if (chosenPlan) newUserInfo.planId = chosenPlan._id; 
         await newUserInfo.save();
         res.status(201).json(newUserInfo);

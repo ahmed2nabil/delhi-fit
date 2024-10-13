@@ -1,4 +1,7 @@
 const PlanFileModel = require("../models/planFileModel");
+const fs = require('fs');
+const path = require('path');
+
 exports.getPlan = async (req, res) => {
     const planId = req.params.planId;
     try {
@@ -35,3 +38,4 @@ exports.choosetheCorrectPlan = async (workoutDaysPerWeek, gender, workoutLocatio
     const chosenPlan = await PlanFileModel.findOne({workoutDaysPerWeek , gender, workoutLocation});
     return chosenPlan;
 }
+

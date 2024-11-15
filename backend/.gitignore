@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
-
+credentials.json
+service-account-key.json
 # Environment variables
 .env

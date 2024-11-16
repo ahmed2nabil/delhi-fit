@@ -122,6 +122,10 @@ const UsersInfoSchema = new mongoose.Schema({
     planId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "FilePlan"
+    },
+    trainerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Trainer"
     }
 }, {timestamps: true});
 

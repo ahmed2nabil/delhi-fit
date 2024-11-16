@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/ar';
 import { UsersInfoService } from '../services/users-info.service';
+import { ActivatedRoute } from '@angular/router';
 
 export class ArabicDateAdapter extends NativeDateAdapter {
   override format(date: Date, displayFormat: Object): string {
@@ -58,9 +59,15 @@ export class MultiStepFormComponent implements OnInit {
   today: Date;
   userSubmitted: boolean = false;
   totalSteps: number = 10;
-  constructor(private fb: FormBuilder, private userInfoService: UsersInfoService) {
-        // Set today's date
-        this.today = new Date();
+  trainerId: string = '';
+  constructor(
+    private fb: FormBuilder, 
+    private userInfoService: UsersInfoService,
+    private route: ActivatedRoute
+  ) 
+  {
+    // Set today's date
+    this.today = new Date();
   }
 
   ngOnInit() {
@@ -121,6 +128,8 @@ export class MultiStepFormComponent implements OnInit {
       additionalInfo: [''],
       referralSource: ['', Validators.required]
     });
+
+    this.trainerId = this.route.snapshot.params['trainerId'];
   }
 
   submitForm() {
@@ -142,7 +151,8 @@ export class MultiStepFormComponent implements OnInit {
       ...this.healthForm.value,
       ...this.dietForm.value,
       ...this.exerciseRatingForm.value,
-      ...this.additionalInfoForm.value
+      ...this.additionalInfoForm.value,
+      trainerId: this.trainerId
     };
     this.userSubmitted = true;
     this.userInfoService

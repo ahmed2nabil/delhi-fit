@@ -18,7 +18,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>العمر</mat-label>
-            <input matInput type="number" min="0"  formControlName="age" required>
+            <input matInput type="number" min="0" formControlName="age" required>
             @if (personalInfoForm.get('age')?.hasError('required')) {
               <mat-error>
                 يجب إدخال العمر.
@@ -61,26 +61,23 @@
       <mat-step [stepControl]="fitnessGoalsForm">
         <form [formGroup]="fitnessGoalsForm">
           <!-- <ng-template matStepLabel>أهداف اللياقة</ng-template> -->
-          <mat-form-field>
+          <mat-radio-group formControlName="fitnessGoal">
             <mat-label>ما هو الهدف من الاشتراك؟</mat-label>
-            <textarea matInput formControlName="fitnessGoal" rows="4" required></textarea>
+            <div class="mat-radio-button-wrapper">
+              <mat-radio-button value="muscleBuilding">البناء العضلي</mat-radio-button>
+              <mat-radio-button value="athleticPerformance">تحسين الاداء الرياضي</mat-radio-button>
+              <mat-radio-button value="strengthAndMuscle">الدمج بين البناء العضلي والقوة</mat-radio-button>
+            </div>
+          </mat-radio-group>
+          <mat-form-field>
+            <mat-label>اكتب عن هدفك</mat-label>
+            <textarea matInput formControlName="fitnessGoalText" rows="4" required></textarea>
           </mat-form-field>  
           <mat-radio-group formControlName="fitnessLevel">
             <mat-label>ما هو مستواك الرياضي الحالي؟</mat-label>
             <mat-radio-button value="beginner">مبتدئ ( 6 أشهر ملتزم في التمرين والتغذية)</mat-radio-button>
             <mat-radio-button value="intermediate">متوسط الخبرة ( 6 أشهر - سنتين)</mat-radio-button>
             <mat-radio-button value="advanced">متقدم ( أكثر من 6 أشهر )</mat-radio-button>
-          </mat-radio-group>
-          <mat-radio-group formControlName="fitnessFavPlan">
-            <mat-label>هل في خطة معينة حابب تمشي عليها؟</mat-label>
-            <div class="mat-radio-button-wrapper" >
-              <mat-radio-button value="pushPullLeg">push pull leg / دفع سحب ارجل</mat-radio-button>
-              <mat-radio-button value="fullBody">full body / فل بودي</mat-radio-button>
-              <mat-radio-button value="upperLower">upper lower / علوي سفلي</mat-radio-button>
-              <mat-radio-button value="upper">تركيز علي الجزء العلوي</mat-radio-button>
-              <mat-radio-button value="lower">تركيز علي الجزء السفلي</mat-radio-button>
-              <mat-radio-button value="other">شئ اخر مع ذكره</mat-radio-button>
-            </div>
           </mat-radio-group>
           @if (fitnessGoalsForm.get('fitnessFavPlan')?.value === 'other') {
             <mat-form-field>
@@ -172,6 +169,18 @@
             <mat-label>هل عندك تجربة مسبقة بالتمارين أو الدايت؟</mat-label>
             <textarea matInput formControlName="previousExperience" rows="4" required></textarea>
           </mat-form-field>
+          @if (showFitnessPlan) {
+            <mat-radio-group formControlName="fitnessFavPlan">
+              <mat-label>هل في خطة معينة حابب تمشي عليها؟</mat-label>
+              <div class="mat-radio-button-wrapper" >
+                @for(option of fitnessPlanOptions; track option) {
+                  <mat-radio-button [value]="option.value">
+                    {{option.label}} / {{option.arabicLabel}}
+                  </mat-radio-button>
+                }
+              </div>
+            </mat-radio-group>
+          }
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>
             <button mat-button matStepperNext class="action-button">التالي</button>

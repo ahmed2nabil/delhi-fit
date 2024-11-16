@@ -36,6 +36,9 @@ const UsersInfoSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    fitnessGoalText: { 
+        type: String,
+    },
     fitnessLevel: {
         type: String,
         require: true

@@ -1,5 +1,6 @@
 // controllers/recordController.js
-const UserInfo = require('../models/usersInfo');
+const UserInfo = require('../models/usersInfoModel');
+const TrainerModel = require('../models/trainerModel');
 const { choosetheCorrectPlan } = require("./planFileController");
 const { mockDrive } = require("./mockGoogleDrive");
 const {driveService } = require("./googleDriveIntegration")
@@ -21,13 +22,14 @@ exports.AddUserInfo = async (req, res) => {
     try {
         const newUserInfo = new UserInfo({...userInfoData});
         const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation);
+        const googleDriveFolderId = await TrainerModel.find({ trainerId: newUserInfo.trainerId });
         if (chosenPlan) {
             newUserInfo.planId = chosenPlan._id; 
         } 
         await newUserInfo.save();
         
         if (chosenPlan) {
-            uploadUserFile(newUserInfo, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name )
+            uploadUserFile(newUserInfo, googleDriveFolderId, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name)
                 .then(file => console.log('File uploaded:', file))
                 .catch(error => console.error('Upload failed:', error));
         } 
@@ -41,13 +43,13 @@ exports.AddUserInfo = async (req, res) => {
 }
 
 // In your file upload function
-async  function uploadUserFile(user, filePath, fileName) {
+async  function uploadUserFile(user, googleDriveFolderId, filePath, fileName) {
     try {
         // Generate a unique filename to avoid conflicts
         const uniqueFileName = `${user.name}_${fileName}_${Date.now()}_.xlsx`;
         
         // Upload Excel file using mock Google Drive API
-        const uploadedFile = await driveService.uploadExcelFile(filePath, uniqueFileName, "1oZimhfmeevt7MWQE-ULcCZjECsW2Rk6l");
+        const uploadedFile = await driveService.uploadExcelFile(filePath, uniqueFileName, googleDriveFolderId);
         
         // Save file information to your database
         // await saveFileToDatabase({

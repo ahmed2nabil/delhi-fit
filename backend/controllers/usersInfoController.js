@@ -2,8 +2,7 @@
 const UserInfo = require('../models/usersInfoModel');
 const TrainerModel = require('../models/trainerModel');
 const { choosetheCorrectPlan } = require("./planFileController");
-const { mockDrive } = require("./mockGoogleDrive");
-const {driveService } = require("./googleDriveIntegration")
+const {driveService } = require("./googleDriveIntegration");
 const path = require("path");
 const prefix = "./planFileList";
 // Fetch all records
@@ -20,16 +19,21 @@ exports.getUsersInfo = async (req, res) => {
 exports.AddUserInfo = async (req, res) => {
     const userInfoData = req.body;
     try {
+        const trainerData = await TrainerModel.findOne({ trainerId: userInfoData.trainerId });
+        if (!trainerData || !trainerData.googleDriveFolderId) {
+            throw new Error("no trainer found")
+        }
+        userInfoData.trainerId = trainerData._id;
         const newUserInfo = new UserInfo({...userInfoData});
         const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation);
-        const googleDriveFolderId = await TrainerModel.find({ trainerId: newUserInfo.trainerId });
         if (chosenPlan) {
-            newUserInfo.planId = chosenPlan._id; 
-        } 
+            newUserInfo.planId = chosenPlan._id;
+        }
+
         await newUserInfo.save();
         
         if (chosenPlan) {
-            uploadUserFile(newUserInfo, googleDriveFolderId, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name)
+            uploadUserFile(newUserInfo, trainerData.googleDriveFolderId, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name)
                 .then(file => console.log('File uploaded:', file))
                 .catch(error => console.error('Upload failed:', error));
         } 
@@ -61,7 +65,7 @@ async  function uploadUserFile(user, googleDriveFolderId, filePath, fileName) {
         //   uploadDate: new Date()
         // });
     
-        console.log(`File uploaded successfully: ${uploadedFile.name}`);
+        console.log(`File uploaded successfully: ${uploadedFile.fileName}`);
         return uploadedFile;
     } catch (error) {
         console.error('Error in uploadUserFile:', error);

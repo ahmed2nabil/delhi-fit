@@ -1,6 +1,7 @@
 # Dependency directories
 node_modules/
 credentials.json
+delhi-cred.json
 service-account-key.json
 # Environment variables
 .env

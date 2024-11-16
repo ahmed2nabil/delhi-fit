@@ -2,7 +2,7 @@
 const UserInfo = require('../models/usersInfoModel');
 const TrainerModel = require('../models/trainerModel');
 const { choosetheCorrectPlan } = require("./planFileController");
-const {driveService } = require("./googleDriveIntegration");
+const { driveService } = require("./googleDriveIntegration");
 const path = require("path");
 const prefix = "./planFileList";
 // Fetch all records
@@ -25,7 +25,7 @@ exports.AddUserInfo = async (req, res) => {
         }
         userInfoData.trainerId = trainerData._id;
         const newUserInfo = new UserInfo({...userInfoData});
-        const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation);
+        const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation, newUserInfo.fitnessGoal, newUserInfo.fitnessFavPlan);
         if (chosenPlan) {
             newUserInfo.planId = chosenPlan._id;
         }

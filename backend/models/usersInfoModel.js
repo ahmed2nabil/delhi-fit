@@ -27,7 +27,6 @@ const UsersInfoSchema = new mongoose.Schema({
     },
     fitnessFavPlan: { // used for plan calculation
         type: String,
-        require: true
     },
     fitnessFavPlanOther: {
         type: String,

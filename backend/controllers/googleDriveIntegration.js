@@ -5,7 +5,7 @@ const fs = require('fs');
 class GoogleDriveService {
     constructor() {
         // Path to your service account key file
-        this.KEYFILEPATH = path.join(__dirname, '../service-account-key.json');
+        this.KEYFILEPATH = path.join(__dirname, '../delhi-cred.json');
         this.SCOPES = ['https://www.googleapis.com/auth/drive'];
         
         this.ALLOWED_MIME_TYPES = [

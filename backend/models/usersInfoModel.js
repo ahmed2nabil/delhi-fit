@@ -13,7 +13,7 @@ const UsersInfoSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    gender: {
+    gender: {  // used for plan calculation
         type: String,
         require: true
     },
@@ -25,29 +25,31 @@ const UsersInfoSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    fitnessFavPlan: {
+    fitnessFavPlan: { // used for plan calculation
         type: String,
-        require: true
     },
     fitnessFavPlanOther: {
         type: String,
     },
-    fitnessGoal: {
+    fitnessGoal: { // used for plan calculation
         type: String,
         require: true
+    },
+    fitnessGoalText: { 
+        type: String,
     },
     fitnessLevel: {
         type: String,
         require: true
     },
-    workoutLocation: {
+    workoutLocation: {  // used for plan calculation
         type: String,
         require: true
     },
     homeEquipment:  {
         type: String,
     },
-    workoutDaysPerWeek: {
+    workoutDaysPerWeek: {  // used for plan calculation
         type: Number,
         require: true
     },

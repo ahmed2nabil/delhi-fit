@@ -34,8 +34,17 @@ exports.addMultiplePlan = async (req, res) => {
 /**
  * The Correct Chose For plan based On User Selection
  */
-exports.choosetheCorrectPlan = async (workoutDaysPerWeek, gender, workoutLocation) => {
-    const chosenPlan = await PlanFileModel.findOne({workoutDaysPerWeek , gender, workoutLocation});
+exports.choosetheCorrectPlan = async (workoutDaysPerWeek, gender, workoutLocation, fitnessGoal, fitnessFavPlan) => {
+    const planFilter = {
+        workoutDaysPerWeek,
+        gender,
+        workoutLocation,
+        fitnessGoal:  { $in: [fitnessGoal ] },
+    }
+    if (fitnessFavPlan) {
+        plan.fitnessFavPlan = fitnessFavPlan;
+    }
+    const chosenPlan = await PlanFileModel.findOne(planFilter);
     return chosenPlan;
 }
 

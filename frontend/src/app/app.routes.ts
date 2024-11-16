@@ -3,28 +3,29 @@ import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     {
-        path: '',
-        loadComponent: () => import('./multi-step-form/multi-step-form.component')
-        .then(m => m.MultiStepFormComponent),
+        path: "",
+        loadComponent: () => import('./login-page/login-page.component')
+        .then(m => m.LoginPageComponent)
     },
     {
-        path: 'multiStep',
+        path: 'multiStep/:trainerId',
         loadComponent: () => import('./multi-step-form/multi-step-form.component')
         .then(m => m.MultiStepFormComponent)
     },
     {
         path: 'login',
         loadComponent: () => import('./login-page/login-page.component')
-        .then(m => m.LoginPageComponent)   
+        .then(m => m.LoginPageComponent)
     },
     {
         path: "admin",
         loadComponent: () => import('./admin-dashboard/admin-dashboard.component')
         .then(m => m.AdminDashboardComponent),
         canActivate: [AuthGuard]      
-    }, {
+    }, 
+    {
         path: "**",
-        loadComponent: () => import('./multi-step-form/multi-step-form.component')
-        .then(m => m.MultiStepFormComponent), 
+        loadComponent: () => import('./login-page/login-page.component')
+        .then(m => m.LoginPageComponent)   
     }
 ];

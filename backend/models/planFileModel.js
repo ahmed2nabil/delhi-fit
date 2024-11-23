@@ -22,7 +22,7 @@ const PlanSchema = new mongoose.Schema({
         required: true
     },
     fitnessGoal: {
-        type: [String],
+        type: String,
         required: true
     },
     fitnessFavPlan: {

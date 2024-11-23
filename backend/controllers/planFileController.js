@@ -42,7 +42,7 @@ exports.choosetheCorrectPlan = async (workoutDaysPerWeek, gender, workoutLocatio
         fitnessGoal:  { $in: [fitnessGoal ] },
     }
     if (fitnessFavPlan) {
-        plan.fitnessFavPlan = fitnessFavPlan;
+        planFilter.fitnessFavPlan = fitnessFavPlan;
     }
     const chosenPlan = await PlanFileModel.findOne(planFilter);
     return chosenPlan;

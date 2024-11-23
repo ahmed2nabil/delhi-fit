@@ -20,7 +20,7 @@ const TrainerSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  googleDriveFolderId: { 
+  googleDriveFolderId: {
     type: String,
     required: true,
     unique: true

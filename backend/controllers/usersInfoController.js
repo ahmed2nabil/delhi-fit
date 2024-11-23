@@ -28,20 +28,20 @@ exports.AddUserInfo = async (req, res) => {
         const chosenPlan = await choosetheCorrectPlan(newUserInfo.workoutDaysPerWeek, newUserInfo.gender, newUserInfo.workoutLocation, newUserInfo.fitnessGoal, newUserInfo.fitnessFavPlan);
         if (chosenPlan) {
             newUserInfo.planId = chosenPlan._id;
+            const file = await uploadUserFile(newUserInfo, trainerData.googleDriveFolderId, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name)
+            if(!file) {
+                throw new Error("Upload failed")
+            }
+        } else {
+            throw new Error("No Plan Chosen")
         }
-
         await newUserInfo.save();
         
-        if (chosenPlan) {
-            uploadUserFile(newUserInfo, trainerData.googleDriveFolderId, prefix + chosenPlan.filePath + '/' + chosenPlan.name + '.xlsx', chosenPlan.name)
-                .then(file => console.log('File uploaded:', file))
-                .catch(error => console.error('Upload failed:', error));
-        } 
-
         res.status(201).json(newUserInfo);
 
     } catch (error) {
-        console.error(error.message);
+        console.log("Error: ")
+        console.error(error);
         res.status(500).send('Server error');
     }
 }
@@ -51,9 +51,12 @@ async  function uploadUserFile(user, googleDriveFolderId, filePath, fileName) {
     try {
         // Generate a unique filename to avoid conflicts
         const uniqueFileName = `${user.name}_${fileName}_${Date.now()}_.xlsx`;
-        
+        const trainereeFolder = await driveService.createFolder(user.name, googleDriveFolderId);
         // Upload Excel file using mock Google Drive API
-        const uploadedFile = await driveService.uploadExcelFile(filePath, uniqueFileName, googleDriveFolderId);
+        const guideFileName = 'كتيب التعليمات والارشادات.pdf';
+        const guideFilePath = prefix + '/' + guideFileName;
+        const uploadedFile = await driveService.uploadExcelAndGuideFile(filePath, uniqueFileName, trainereeFolder.folderId || googleDriveFolderId, 
+            guideFilePath, guideFileName);
         
         // Save file information to your database
         // await saveFileToDatabase({

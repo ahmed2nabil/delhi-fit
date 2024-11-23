@@ -44,6 +44,23 @@ class GoogleDriveService {
         }
     }
 
+    validatePDFFile(guideFilePath) {
+        // Validate PDF file
+        const extension = path.extname(guideFilePath).toLowerCase();
+        if (extension !== '.pdf') {
+            throw new Error('Invalid file type. Only PDF files (.pdf) are allowed');
+        }
+
+        if (!fs.existsSync(guideFilePath)) {
+            throw new Error('File does not exist');
+        }
+
+        const stats = fs.statSync(guideFilePath);
+        const fileSizeInMB = stats.size / (1024 * 1024);
+        if (fileSizeInMB > 10) {
+            throw new Error('File size exceeds 10MB limit');
+        }
+}
     getMimeType(filePath) {
         const extension = path.extname(filePath).toLowerCase();
         return extension === '.xlsx' 
@@ -51,12 +68,18 @@ class GoogleDriveService {
             : 'application/vnd.ms-excel';
     }
 
-    async uploadExcelFile(filePath, fileName, folderId) {
+    async uploadExcelAndGuideFile(filePath, fileName, folderId, guideFilePath, guideFileName) {
         try {
             this.validateExcelFile(filePath);
-            
+
+
+            this.validatePDFFile(guideFilePath);
+
             const auth = await this.authorize();
             const drive = google.drive({ version: 'v3', auth });
+
+
+            await this.uploadGuidePDfFile(drive, guideFilePath, guideFileName, folderId);
 
             const fileMetadata = {
               name: fileName.endsWith('.xlsx') || fileName.endsWith('.xls') 
@@ -85,7 +108,6 @@ class GoogleDriveService {
                     type: 'anyone'
                 }
             });
-
             return {
                 success: true,
                 fileId: file.data.id,
@@ -99,7 +121,45 @@ class GoogleDriveService {
             throw new Error(`Failed to upload Excel file: ${error.message}`);
         }
     }
-
+    async uploadGuidePDfFile(drive, filePath, fileName, folderId) {
+        try {
+            const fileMetadata = {
+                name: fileName.endsWith('.pdf') ? fileName : `${fileName}.pdf`,
+                parents: [folderId]
+            };
+    
+            const media = {
+                mimeType: 'application/pdf',
+                body: fs.createReadStream(filePath)
+            };
+    
+            const file = await drive.files.create({
+                resource: fileMetadata,
+                media: media,
+                fields: 'id, name, webViewLink, mimeType',
+                supportsAllDrives: true
+            });
+    
+            // Make the file accessible via link
+            await drive.permissions.create({
+                fileId: file.data.id,
+                requestBody: {
+                    role: 'reader',
+                    type: 'anyone'
+                }
+            });
+            return {
+                success: true,
+                fileId: file.data.id,
+                fileName: file.data.name,
+                webViewLink: file.data.webViewLink,
+                mimeType: file.data.mimeType
+            };
+        } catch (error) {
+            console.error('Upload Error:', error);
+            throw new Error(`Failed to upload PDF file: ${error.message}`);
+        }
+    }
     async listExcelFiles(folderId = null, pageSize = 10) {
         try {
             const auth = await this.authorize();

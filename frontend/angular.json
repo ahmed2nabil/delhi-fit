@@ -16,6 +16,9 @@
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "optimization": true,
+            "progress": true,
+            "memoryLimit": 4096,
             "polyfills": [
               "zone.js"
             ],

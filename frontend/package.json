@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build --configuration production",
+    "build:prod": "NODE_OPTIONS=\"--max-old-space-size=4096\" ng build --configuration production --verbose",
+    "postinstall": "ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points",
     "dev": "ng serve --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

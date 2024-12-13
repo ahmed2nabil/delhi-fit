@@ -3,5 +3,6 @@ node_modules/
 credentials.json
 delhi-cred.json
 service-account-key.json
+planFileList/
 # Environment variables
 .env

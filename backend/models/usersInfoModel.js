@@ -15,7 +15,8 @@ const UsersInfoSchema = new mongoose.Schema({
     },
     gender: {  // used for plan calculation
         type: String,
-        require: true
+        require: true,
+        enum: ['male', 'female'],
     },
     dateOfBirth: {
         type: Date,
@@ -27,13 +28,15 @@ const UsersInfoSchema = new mongoose.Schema({
     },
     fitnessFavPlan: { // used for plan calculation
         type: String,
+        enum: ['pushPullLeg', 'fullBody', 'upperLower', 'upper', 'lower', 'other'],
     },
     fitnessFavPlanOther: {
         type: String,
     },
     fitnessGoal: { // used for plan calculation
         type: String,
-        require: true
+        require: true,
+        enum: ['athleticPerformance', 'muscleBuilding', 'strengthAndMuscle'],
     },
     fitnessGoalText: { 
         type: String,
@@ -44,14 +47,16 @@ const UsersInfoSchema = new mongoose.Schema({
     },
     workoutLocation: {  // used for plan calculation
         type: String,
-        require: true
+        require: true,
+        enum: ['home', 'gym'],
     },
     homeEquipment:  {
         type: String,
     },
     workoutDaysPerWeek: {  // used for plan calculation
         type: Number,
-        require: true
+        require: true,
+        enum: [3, 4, 5, 6],
     },
     workoutHoursPerDay: {
         type: String,

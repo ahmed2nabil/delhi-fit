@@ -79,12 +79,6 @@
             <mat-radio-button value="intermediate">متوسط الخبرة ( 6 أشهر - سنتين)</mat-radio-button>
             <mat-radio-button value="advanced">متقدم ( أكثر من 6 أشهر )</mat-radio-button>
           </mat-radio-group>
-          @if (fitnessGoalsForm.get('fitnessFavPlan')?.value === 'other') {
-            <mat-form-field>
-              <mat-label>ما هو ؟</mat-label>
-              <input matInput formControlName="fitnessFavPlanOther">
-            </mat-form-field>
-          }
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>
             <button mat-button matStepperNext class="action-button">التالي</button>
@@ -181,6 +175,10 @@
               </div>
             </mat-radio-group>
           }
+          <mat-form-field>
+            <mat-label>اذا عندك خطة معينة حابب تمشي عليها اكتب لي</mat-label>
+            <input matInput formControlName="fitnessFavPlanOther">
+          </mat-form-field>
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>
             <button mat-button matStepperNext class="action-button">التالي</button>

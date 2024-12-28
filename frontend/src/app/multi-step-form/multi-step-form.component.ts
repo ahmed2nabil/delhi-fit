@@ -86,7 +86,6 @@ export class MultiStepFormComponent implements OnInit {
       fitnessGoal: ['', Validators.required],
       fitnessGoalText: [''],
       fitnessLevel: ['', Validators.required],
-      fitnessFavPlanOther: ['']
     });
 
     this.workoutDetailsForm = this.fb.group({
@@ -105,6 +104,7 @@ export class MultiStepFormComponent implements OnInit {
     this.experienceForm = this.fb.group({
       previousExperience: ['', Validators.required],
       fitnessFavPlan: [''],
+      fitnessFavPlanOther: ['']
     });
 
     this.healthForm = this.fb.group({

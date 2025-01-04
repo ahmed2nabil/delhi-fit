@@ -28,7 +28,7 @@ const UsersInfoSchema = new mongoose.Schema({
     },
     fitnessFavPlan: { // used for plan calculation
         type: String,
-        enum: ['pushPullLeg', 'fullBody', 'upperLower', 'upper', 'lower', 'other'],
+        enum: ['pushPullLeg', 'fullBody', 'upperLower', 'upper', 'lower', 'other', ''],
     },
     fitnessFavPlanOther: {
         type: String,

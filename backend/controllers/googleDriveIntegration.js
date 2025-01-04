@@ -1,13 +1,17 @@
 const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config();
 
 class GoogleDriveService {
     constructor() {
         // Path to your service account key file
-        this.KEYFILEPATH = path.join(__dirname, '../delhi-cred.json');
+        // this.KEYFILEPATH = path.join(__dirname, '../delhi-cred.json');
         this.SCOPES = ['https://www.googleapis.com/auth/drive'];
-        
+        const credentials = JSON.parse(
+            Buffer.from(process.env.GOOGLE_CREDENTIALS_BASE64, 'base64').toString()
+        );
+        this.credentials = credentials;
         this.ALLOWED_MIME_TYPES = [
             'application/vnd.ms-excel', // .xls
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
@@ -17,7 +21,8 @@ class GoogleDriveService {
     async authorize() {
         try {
             const auth = new google.auth.GoogleAuth({
-                keyFile: this.KEYFILEPATH,
+                // keyFile: this.KEYFILEPATH,
+                credentials: this.credentials,
                 scopes: this.SCOPES
             });
             return auth;
@@ -63,12 +68,32 @@ class GoogleDriveService {
 }
     getMimeType(filePath) {
         const extension = path.extname(filePath).toLowerCase();
-        return extension === '.xlsx' 
-            ? 'application/vnd.ms-excel'
-            : 'application/vnd.ms-excel';
+        switch (extension) {
+            case '.xlsx':
+                return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            case '.xls':
+                return 'application/vnd.ms-excel';
+            case '.pdf':
+                return 'application/pdf';
+            default:
+                throw new Error('Unsupported file type');
+        }
     }
 
+    async uploadWithRetry(operation, maxRetries = 3) {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                return await operation();
+            } catch (error) {
+                if (attempt === maxRetries) throw error;
+                const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
     async uploadExcelAndGuideFile(filePath, fileName, folderId, guideFilePath, guideFileName) {
+        const uploadedFiles = [];
+
         try {
             this.validateExcelFile(filePath);
 
@@ -79,44 +104,62 @@ class GoogleDriveService {
             const drive = google.drive({ version: 'v3', auth });
 
 
-            await this.uploadGuidePDfFile(drive, guideFilePath, guideFileName, folderId);
+            // Upload PDF with retry
+            const pdfResult = await this.uploadWithRetry(() => 
+                this.uploadGuidePDfFile(drive, guideFilePath, guideFileName, folderId)
+            );
+            // Upload Excel with retry
+            const excelResult = await this.uploadWithRetry(async () => {
+                const fileMetadata = {
+                    name: fileName.endsWith('.xlsx') || fileName.endsWith('.xls') 
+                        ? fileName 
+                        : `${fileName}.xlsx`,
+                    parents: [folderId],
+                };
 
-            const fileMetadata = {
-              name: fileName.endsWith('.xlsx') || fileName.endsWith('.xls') 
-              ? fileName 
-              : `${fileName}.xlsx`,
-              parents: [folderId],  // Specify the parent folder ID
-            };
+                const media = {
+                    mimeType: this.getMimeType(filePath),
+                    body: fs.createReadStream(filePath)
+                };
 
-            const media = {
-                mimeType: this.getMimeType(filePath),
-                body: fs.createReadStream(filePath)
-            };
+                const file = await drive.files.create({
+                    resource: fileMetadata,
+                    media: media,
+                    fields: 'id, name, webViewLink, mimeType',
+                    supportsAllDrives: true
+                });
 
-            const file = await drive.files.create({
-                resource: fileMetadata,
-                media: media,
-                fields: 'id, name, webViewLink, mimeType',
-                supportsAllDrives: true
+                await drive.permissions.create({
+                    fileId: file.data.id,
+                    requestBody: {
+                        role: 'reader',
+                        type: 'anyone'
+                    }
+                });
+
+                return file;
             });
 
-            // Make the file accessible via link
-            await drive.permissions.create({
-                fileId: file.data.id,
-                requestBody: {
-                    role: 'reader',
-                    type: 'anyone'
-                }
-            });
+            uploadedFiles.push(pdfResult.fileId);
+            uploadedFiles.push(excelResult.data.id);
             return {
                 success: true,
-                fileId: file.data.id,
-                fileName: file.data.name,
-                webViewLink: file.data.webViewLink,
-                mimeType: file.data.mimeType
+                fileId: excelResult.data.id,
+                fileName: excelResult.data.name,
+                webViewLink: excelResult.data.webViewLink,
+                mimeType: excelResult.data.mimeType,
+                pdf: pdfResult
             };
 
         } catch (error) {
+            // Cleanup any uploaded files
+            const auth = await this.authorize();
+            const drive = google.drive({ version: 'v3', auth });
+            
+            for (const fileId of uploadedFiles) {
+                await this.deleteFileQuietly(drive, fileId);
+            }
+            
             console.error('Upload Error:', error);
             throw new Error(`Failed to upload Excel file: ${error.message}`);
         }
@@ -252,6 +295,13 @@ class GoogleDriveService {
         } catch (error) {
             console.error('Delete Error:', error);
             throw new Error('Failed to delete file from Google Drive');
+        }
+    }
+    async deleteFileQuietly(drive, fileId) {
+        try {
+            await drive.files.delete({ fileId });
+        } catch (error) {
+            console.error(`Failed to delete file ${fileId}:`, error);
         }
     }
 }

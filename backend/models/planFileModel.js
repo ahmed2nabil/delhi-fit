@@ -78,7 +78,7 @@ const PlanSchema = new mongoose.Schema({
     },
     fitnessFavPlan: {
         type: String,
-        enum: ['pushPullLeg', 'fullBody', 'upperLower', 'upper', 'lower', 'other'],
+        enum: ['pushPullLeg', 'fullBody', 'upperLower', 'upper', 'lower', 'other', ''],
     },
     
 });

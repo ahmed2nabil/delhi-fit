@@ -159,13 +159,18 @@ mat-form-field {
 
 /* ================= Radio Button Style ================= */
 mat-radio-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    display: block !important; /* Match form field display */
+    width: 100%; /* Match form field width */
+    margin-bottom: 20px; /* Match form field margin */
     color: #f1f1f1 !important;
+    background: rgba(255, 255, 255, 0.1); /* Light background similar to form fields */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Match form field padding */
 }
 mat-radio-group mat-label {
+    display: block;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 mat-radio-group .mat-radio-button-wrapper {
     display: grid;
@@ -174,6 +179,11 @@ mat-radio-group .mat-radio-button-wrapper {
 }
 
 @media (max-width: 768px) {
+    mat-radio-group {
+        padding: 8px; /* Match mobile form field padding */
+        margin-bottom: 16px;
+    }
+
     mat-radio-group .mat-radio-button-wrapper {
         grid-template-columns: 1fr;
         gap: 8px;

@@ -50,16 +50,13 @@ registerLocaleData(localeAr);
 export class MultiStepFormComponent implements OnInit {
   personalInfoForm!: FormGroup;
   fitnessGoalsForm!: FormGroup;
-  workoutDetailsForm!: FormGroup;
-  occupationForm!: FormGroup;
-  experienceForm!: FormGroup;
-  healthForm!: FormGroup;
-  dietForm!: FormGroup;
-  exerciseRatingForm!: FormGroup;
-  additionalInfoForm!: FormGroup;
+  workoutLifestyleForm!: FormGroup;
+  healthExperienceForm!: FormGroup;
+  dietAssessmentForm!: FormGroup;
+  finalInfoForm!: FormGroup;
   today: Date;
   userSubmitted: boolean = false;
-  totalSteps: number = 10;
+  totalSteps: number = 6;
   trainerId: string = '';
   fitnessPlanOptions: { value: string; label: string; arabicLabel: string }[] = [];
   showFitnessPlan: boolean = false;
@@ -88,47 +85,37 @@ export class MultiStepFormComponent implements OnInit {
       fitnessLevel: ['', Validators.required],
     });
 
-    this.workoutDetailsForm = this.fb.group({
+    this.workoutLifestyleForm = this.fb.group({
       workoutLocation: ['', Validators.required],
       homeEquipment: [''],
       workoutDaysPerWeek: ['', Validators.required],
       workoutHoursPerDay: ['', Validators.required],
-      preferredWorkoutDays: [[], Validators.required]
-    });
-
-    this.occupationForm = this.fb.group({
+      preferredWorkoutDays: [[], Validators.required],
       currentOccupation: [''],
       jobNature: ['', Validators.required]
     });
 
-    this.experienceForm = this.fb.group({
+    this.healthExperienceForm = this.fb.group({
       previousExperience: ['', Validators.required],
       fitnessFavPlan: [''],
-      fitnessFavPlanOther: ['']
-    });
-
-    this.healthForm = this.fb.group({
+      fitnessFavPlanOther: [''],
       chronicDiseases: [''],
       injuries: [''],
       supplements: ['']
     });
 
-    this.dietForm = this.fb.group({
+    this.dietAssessmentForm = this.fb.group({
       mealPreparation: ['', Validators.required],
       dietMethod: [''],
       dailyDiet: ['', Validators.required],
       foodAllergies: [''],
-      favoriteFoods: ['']
-    });
-
-    this.exerciseRatingForm = this.fb.group({
+      favoriteFoods: [''],
       squatRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
       deadliftRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
-      benchPressRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
-      pullUpRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]]
+      benchPressRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]]
     });
 
-    this.additionalInfoForm = this.fb.group({
+    this.finalInfoForm = this.fb.group({
       additionalInfo: [''],
       referralSource: ['', Validators.required]
     });
@@ -139,11 +126,11 @@ export class MultiStepFormComponent implements OnInit {
       this.updateFitnessPlanOptions();
     });
 
-    this.workoutDetailsForm.get('workoutDaysPerWeek')?.valueChanges.subscribe(() => {
+    this.workoutLifestyleForm.get('workoutDaysPerWeek')?.valueChanges.subscribe(() => {
       this.updateFitnessPlanOptions();
     });
 
-    this.workoutDetailsForm.get('workoutLocation')?.valueChanges.subscribe(() => {
+    this.workoutLifestyleForm.get('workoutLocation')?.valueChanges.subscribe(() => {
       this.updateFitnessPlanOptions();
     });
 
@@ -155,23 +142,17 @@ export class MultiStepFormComponent implements OnInit {
   submitForm() {
     if (this.personalInfoForm.valid &&
       this.fitnessGoalsForm.valid &&
-      this.workoutDetailsForm.valid &&
-      this.occupationForm.valid &&
-      this.experienceForm.valid &&
-      this.healthForm.valid &&
-      this.dietForm.valid &&
-      this.exerciseRatingForm.valid &&
-      this.additionalInfoForm.valid) {
+      this.workoutLifestyleForm.valid &&
+      this.healthExperienceForm.valid &&
+      this.dietAssessmentForm.valid &&
+      this.finalInfoForm.valid) {
     const userData = {
       ...this.personalInfoForm.value,
       ...this.fitnessGoalsForm.value,
-      ...this.workoutDetailsForm.value,
-      ...this.occupationForm.value,
-      ...this.experienceForm.value,
-      ...this.healthForm.value,
-      ...this.dietForm.value,
-      ...this.exerciseRatingForm.value,
-      ...this.additionalInfoForm.value,
+      ...this.workoutLifestyleForm.value,
+      ...this.healthExperienceForm.value,
+      ...this.dietAssessmentForm.value,
+      ...this.finalInfoForm.value,
       trainerId: this.trainerId
     };
     this.userSubmitted = true;
@@ -193,8 +174,8 @@ export class MultiStepFormComponent implements OnInit {
   }
   private updateFitnessPlanOptions() {
     const gender = this.personalInfoForm.get('gender')?.value;
-    const daysPerWeek = this.workoutDetailsForm.get('workoutDaysPerWeek')?.value;
-    const location = this.workoutDetailsForm.get('workoutLocation')?.value;
+    const daysPerWeek = this.workoutLifestyleForm.get('workoutDaysPerWeek')?.value;
+    const location = this.workoutLifestyleForm.get('workoutLocation')?.value;
     const goal = this.fitnessGoalsForm.get('fitnessGoal')?.value;
 
     // Reset options

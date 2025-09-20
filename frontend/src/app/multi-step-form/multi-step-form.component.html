@@ -1,6 +1,7 @@
 @if(!userSubmitted) {
   <div class="form-container">
-    <h1 class="header-form">قم ببناء جسمك المثالي</h1>
+    <h1 class="header-form"> نموذج معلومات المتدرب</h1>
+    <span style="margin-bottom: 4px;">خذ وقتك بالاجابات لان الخطه ستبني علي اساس اجاباتك</span>
     <div class="progress-bar" [style.width]="(stepper.selectedIndex + 1) / totalSteps * 100 + '%'"></div>
 
     <mat-stepper class="custom-stepper" labelPosition="bottom" [linear]="true" #stepper>
@@ -62,7 +63,7 @@
         <form [formGroup]="fitnessGoalsForm">
           <!-- <ng-template matStepLabel>أهداف اللياقة</ng-template> -->
           <mat-radio-group formControlName="fitnessGoal">
-            <mat-label>ما هو الهدف من الاشتراك؟</mat-label>
+            <mat-label>ايش هدفك من التمارين؟</mat-label>
             <div class="mat-radio-button-wrapper">
               <mat-radio-button value="muscleBuilding">البناء العضلي</mat-radio-button>
               <mat-radio-button value="athleticPerformance">تحسين الاداء الرياضي</mat-radio-button>
@@ -71,7 +72,7 @@
           </mat-radio-group>
           <mat-form-field>
             <mat-label>اكتب عن هدفك</mat-label>
-            <textarea matInput formControlName="fitnessGoalText" rows="4" required></textarea>
+            <textarea matInput formControlName="fitnessGoalText" rows="4"></textarea>
           </mat-form-field>  
           <mat-radio-group formControlName="fitnessLevel">
             <mat-label>ما هو مستواك الرياضي الحالي؟</mat-label>
@@ -176,7 +177,7 @@
             </mat-radio-group>
           }
           <mat-form-field>
-            <mat-label>اذا عندك خطة معينة حابب تمشي عليها اكتب لي</mat-label>
+            <mat-label>هل فيه خطة مفضله بالنسبة لك؟</mat-label>
             <input matInput formControlName="fitnessFavPlanOther">
           </mat-form-field>
           <div>
@@ -198,7 +199,7 @@
             <textarea matInput formControlName="injuries" rows="4"></textarea>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>هل تستخدم أي مكملات غذائية حالياً؟</mat-label>
+            <mat-label>هل تستخدم اي مكملات حاليا ( ارسل صورها لو وجدت على الواتس اب)</mat-label>
             <input matInput formControlName="supplements">
           </mat-form-field>
           <div>
@@ -258,10 +259,10 @@
             <mat-label>البنش بريس</mat-label>
             <input matInput type="number" formControlName="benchPressRating" min="0" max="5" required>
           </mat-form-field>
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-label>البول أب</mat-label>
             <input matInput type="number" formControlName="pullUpRating" min="0" max="5" required>
-          </mat-form-field>
+          </mat-form-field> -->
           <div>
             <button mat-button matStepperPrevious class="action-button">السابق</button>
             <button mat-button matStepperNext class="action-button">التالي</button>
@@ -277,7 +278,7 @@
             <textarea matInput formControlName="additionalInfo" rows="4"></textarea>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>من أين عرفت عبدالعزيز دلحي؟</mat-label>
+            <mat-label>من وين عرفت عبدالعزيز دلحي؟</mat-label>
             <input matInput formControlName="referralSource" required>
           </mat-form-field>
           <div>

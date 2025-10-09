@@ -31,7 +31,7 @@
 </mat-toolbar> -->
 
 <mat-toolbar color="primary" class="navbar">
-    <span class="navbar-brand">تطبيق دلحي</span>
+    <img src="logo.png" alt="Abdulaziz Delhi Logo" class="navbar-logo" (click)="scrollTo('home')">
     <div class="navbar-links" [class.is-desktop]="isDesktop">
         <a mat-button (click)="scrollTo('home')">الرئيسية</a>
         <a mat-button (click)="scrollTo('about')">حول</a>

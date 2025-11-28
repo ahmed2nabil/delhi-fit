@@ -107,7 +107,7 @@
               </mat-form-field>
             }
             <mat-form-field>
-              <mat-label>كم يوم تقدر تتمرن بالأسبوع من 3 - 6؟</mat-label>
+              <mat-label>كم يوم تقدر تتمرن بالأسبوع؟</mat-label>
               <input matInput type="number" min="3" max="6" formControlName="workoutDaysPerWeek" required>
               @if (workoutLifestyleForm.get('workoutDaysPerWeek')?.hasError('required')) {
                 <mat-error>
@@ -166,7 +166,7 @@
           <div class="section-divider">
             <h3 class="section-title">الخبرة السابقة</h3>
             <mat-form-field>
-              <mat-label>هل عندك تجربة مسبقة بالتمارين أو الدايت؟</mat-label>
+              <mat-label>هل عندك اي تجارب مسبقة؟</mat-label>
               <textarea matInput formControlName="previousExperience" rows="4" required></textarea>
             </mat-form-field>
             @if (showFitnessPlan) {
@@ -194,11 +194,11 @@
               <input matInput formControlName="chronicDiseases">
             </mat-form-field>
             <mat-form-field>
-              <mat-label>هل عندك أي إصابات بالجسم حالياً أو إصابات سابقة؟</mat-label>
+              <mat-label>هل عندك اي اصابات بالجسم ؟</mat-label>
               <textarea matInput formControlName="injuries" rows="4"></textarea>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>هل تستخدم اي مكملات حاليا ( ارسل صورها لو وجدت على الواتس اب)</mat-label>
+              <mat-label>هل تستخدم اي مكملات حاليا؟</mat-label>
               <input matInput formControlName="supplements">
             </mat-form-field>
           </div>
@@ -236,11 +236,11 @@
               <textarea matInput formControlName="dailyDiet" rows="4" required></textarea>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>هل يوجد حساسية من أكل معين أو أكل ما تحب تأكله؟</mat-label>
+              <mat-label>هل يوجد حساسيه من أكل معين؟</mat-label>
               <input matInput formControlName="foodAllergies">
             </mat-form-field>
             <mat-form-field>
-              <mat-label>ما هي الأكلات التي تفضل أكلها باستمرار؟</mat-label>
+              <mat-label>ايش الاكلات اللي تفضلها باستمرار؟</mat-label>
               <input matInput formControlName="favoriteFoods">
             </mat-form-field>
           </div>
@@ -279,7 +279,7 @@
           <div class="section-divider">
             <h3 class="section-title">معلومات إضافية</h3>
             <mat-form-field>
-              <mat-label>أي شيء آخر تحب أن أعرفه عنك قبل تصميم الخطة؟</mat-label>
+              <mat-label>اي شي آخر حاب اعرفه عنك ؟</mat-label>
               <textarea matInput formControlName="additionalInfo" rows="4"></textarea>
             </mat-form-field>
             <mat-form-field>
